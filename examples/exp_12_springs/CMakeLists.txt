@@ -1,0 +1,5 @@
+add_executable(exp_12_springs exp_12_springs.cpp)
+target_link_libraries(exp_12_springs mbslib)
+if(USE_ADOLC)
+ target_link_libraries(exp_12_springs ${ADOLC_LIBRARIES})
+endif(USE_ADOLC)

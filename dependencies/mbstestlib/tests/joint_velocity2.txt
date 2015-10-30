@@ -1,0 +1,38 @@
+% Model to with two branches each containing 2 joints with velocities. Compare results.
+
+fixedbase base
+
+fork f0
+prisjoint t0 0 1 0
+prisjoint t1 1 0 0
+mass 1
+point p0
+
+prisjoint t2 1 0 0
+prisjoint t3 0 1 0
+rigidbody p1 _ _ _  _ _ _  1  _ _ _ _ _ _ _ _ _
+		
+
+endmodel
+
+velocities in joints
+0.001
+0 0 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+1 1 1 1
+1 1 1 1
+0 0 0 0
+0 0 0 0
+1 1 0
+1 0 0 0 1 0 0 0 1
+1 1 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0

@@ -1,0 +1,5 @@
+add_executable(exp_11_simulation exp_11_simulation.cpp)
+target_link_libraries(exp_11_simulation mbslib)
+if(USE_ADOLC)
+ target_link_libraries(exp_11_simulation ${ADOLC_LIBRARIES})
+endif(USE_ADOLC)

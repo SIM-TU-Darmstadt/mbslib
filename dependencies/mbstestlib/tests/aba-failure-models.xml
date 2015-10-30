@@ -1,0 +1,465 @@
+<mbs_test_set>
+	<mbs file="aba_failure_fixedbase.txt">
+		<model desc="Model with a minimal amount of element types. To test aba.">
+fixedbase base
+
+prisjoint j0 0 1 0
+
+rotjoint j1 1 0 0
+% rigidbody without translation works fine! (changing translation in x-direction also)
+rigidbody b2 0 1 0 0 0 0   1   1 1 1
+
+		</model>
+		<case nr="1" desc="rotation 90deg checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 1 1.5708"/>
+         <joints_qdot vector_n=" 1 1"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" 0 0"/>
+         <tcp_r vector3="0 1 1"/>
+         <tcp_R matrix3x3="1 0 0  0 0 -1  0 1 0"/>
+         <tcp_v vector3="0 0 0"/>
+         <tcp_omega vector3="1 0 0"/>
+         <tcp_vdot vector3="0 -1 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="2" desc="rotation 45deg checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0 0.785398"/>
+         <joints_qdot vector_n=" 1 1"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" -0.707107 0"/>
+         <tcp_r vector3="0 0.707107 0.707107"/>
+         <tcp_R matrix3x3="1 0 0  0 0.707107 -0.707107  0 0.707107 0.707107"/>
+         <tcp_v vector3="0 0.707107 0.292893"/>
+         <tcp_omega vector3="1 0 0"/>
+         <tcp_vdot vector3="0 -1 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="3" desc="rotation 45deg without prism-joint-velocity checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 1 0.785398"/>
+         <joints_qdot vector_n=" 0 1"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" -0.707107 0"/>
+         <tcp_r vector3="0 1.70711 0.707107"/>
+         <tcp_R matrix3x3="1 0 0  0 0.707107 -0.707107  0 0.707107 0.707107"/>
+         <tcp_v vector3="0 0 1"/>
+         <tcp_omega vector3="1 0 0"/>
+         <tcp_vdot vector3="0 -1 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+	</mbs>
+
+	<mbs file="aba_failure_zeroInertia_fixedbase.txt">
+		<model desc="Model with a minimal amount of element types. To test aba.">
+fixedbase base
+
+prisjoint j0 0 1 0
+
+rotjoint j1 1 0 0
+% rigidbody without translation works fine! (changing translation in x-direction also)
+rigidbody b2 0 1 0 0 0 0   1   _
+
+		</model>
+		<case nr="1" desc="rotation 45deg checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0 0.785398"/>
+         <joints_qdot vector_n=" 1 1"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" -0.707107 0"/>
+         <tcp_r vector3="0 0.707107 0.707107"/>
+         <tcp_R matrix3x3="1 0 0  0 0.707107 -0.707107  0 0.707107 0.707107"/>
+         <tcp_v vector3="0 0.707107 0.292893"/>
+         <tcp_omega vector3="1 0 0"/>
+         <tcp_vdot vector3="0 -1 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="2" desc="rotation 45deg without prism-joint-velocity checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 1 0.785398"/>
+         <joints_qdot vector_n=" 0 1"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" -0.707107 0"/>
+         <tcp_r vector3="0 1.70711 0.707107"/>
+         <tcp_R matrix3x3="1 0 0  0 0.707107 -0.707107  0 0.707107 0.707107"/>
+         <tcp_v vector3="0 0 1"/>
+         <tcp_omega vector3="1 0 0"/>
+         <tcp_vdot vector3="0 -1 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<!--
+		<case nr="3" desc="rotation 90deg checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 1 1.5708"/>
+         <joints_qdot vector_n=" 1 1"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" 0 0"/>
+         <tcp_r vector3="0 1 1"/>
+         <tcp_R matrix3x3="1 0 0  0 0 -1  0 1 0"/>
+         <tcp_v vector3="0 0 0"/>
+         <tcp_omega vector3="1 0 0"/>
+         <tcp_vdot vector3="0 -1 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		-->
+	</mbs>
+
+	
+	<mbs file="aba_failure_2rot_sameaxis_and_lever_fixedbase.txt">
+		<model desc="Model with a minimal amount of element types. To test aba.">
+fixedbase base
+
+rotjoint j0 1 0 0
+rigidbody b2 0 1 0 0 0 0   1   1
+rotjoint j1 1 0 0
+rigidbody b2 0 1 0 0 0 0   1   1
+
+		</model>
+		<case nr="1" desc="rotation 90deg checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 1.5708 1.5708"/>
+         <joints_qdot vector_n=" 1 1"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" -3 1"/>
+         <tcp_r vector3="0 -1 0.999993"/>
+         <tcp_R matrix3x3="1 0 0  0 -1 0  0 0 -1"/>
+         <tcp_v vector3="0 1 2"/>
+         <tcp_omega vector3="2 0 0"/>
+         <tcp_vdot vector3="0 -4 1"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="2" desc="rotation 45deg checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0.785398 0.785398"/>
+         <joints_qdot vector_n=" 1 1"/>
+         <joints_qdotdot vector_n=" 1 0"/>
+         <joints_tau vector_n=" 4.29289 3.41421"/>
+         <tcp_r vector3="0 0.707107 1.70711"/>
+         <tcp_R matrix3x3="1 0 0  0 0 -1  0 1 0"/>
+         <tcp_v vector3="0 0.707107 2.70711"/>
+         <tcp_omega vector3="2 0 0"/>
+         <tcp_vdot vector3="0 -4 2.41421"/>
+         <tcp_omegadot vector3="1 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="3" desc="rotation 45deg without first-joint-velocity checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0.785398 0.785398"/>
+         <joints_qdot vector_n=" 0 1"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" -0.707107 0"/>
+         <tcp_r vector3="0 0.707107 1.70711"/>
+         <tcp_R matrix3x3="1 0 0  0 0 -1  0 1 0"/>
+         <tcp_v vector3="0 0 1"/>
+         <tcp_omega vector3="1 0 0"/>
+         <tcp_vdot vector3="0 -1 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="4" desc="rotation 45deg without second-joint-velocity checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0.785398 0.785398"/>
+         <joints_qdot vector_n=" 1 0"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" 0 0.707107"/>
+         <tcp_r vector3="0 0.707107 1.70711"/>
+         <tcp_R matrix3x3="1 0 0  0 0 -1  0 1 0"/>
+         <tcp_v vector3="0 0.707107 1.70711"/>
+         <tcp_omega vector3="1 0 0"/>
+         <tcp_vdot vector3="0 -1.70711 0.707107"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+	</mbs>
+
+	
+	<mbs file="aba_failure_2rot_orthoaxis_and_lever_fixedbase.txt">
+		<model desc="Model with a minimal amount of element types. To test aba.">
+fixedbase base
+
+rotjoint j0 0 0 1
+rigidbody b2 0 1 0 0 0 0   1   1
+rotjoint j1 1 0 0
+rigidbody b2 0 1 0 0 0 0   1   1
+
+		</model>
+		<case nr="1" desc="rotation 90deg checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 1.5708 1.5708"/>
+         <joints_qdot vector_n=" 1 1"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" -1.99999 0.999996"/>
+         <tcp_r vector3="-0.999996 0 1"/>
+         <tcp_R matrix3x3="0 0 1  1 0 0  0 1 0"/>
+         <tcp_v vector3="-0.999996 0 1"/>
+         <tcp_omega vector3="1 1 0"/>
+         <tcp_vdot vector3="2 -0.999996 0.999996"/>
+         <tcp_omegadot vector3="0 0 -1"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="2" desc="rotation 45deg checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0.785398 0.785398"/>
+         <joints_qdot vector_n=" 1 1"/>
+         <joints_qdotdot vector_n=" 1 0"/>
+         <joints_tau vector_n=" 3.5 1.20711"/>
+         <tcp_r vector3="-1.20711 1.20711 0.707107"/>
+         <tcp_R matrix3x3="0.707107 -0.5 0.5  0.707107 0.5 -0.5  0 0.707107 0.707107"/>
+         <tcp_v vector3="-1.70711 0 1"/>
+         <tcp_omega vector3="1 0.707107 0.707107"/>
+         <tcp_vdot vector3="-0.292894 -2.20711 1.20711"/>
+         <tcp_omegadot vector3="0 1.41421 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="3" desc="rotation 45deg without first-joint-velocity checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0.785398 0.785398"/>
+         <joints_qdot vector_n=" 0 1"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" 0 0"/>
+         <tcp_r vector3="-1.20711 1.20711 0.707107"/>
+         <tcp_R matrix3x3="0.707107 -0.5 0.5  0.707107 0.5 -0.5  0 0.707107 0.707107"/>
+         <tcp_v vector3="0 0 1"/>
+         <tcp_omega vector3="1 0 0"/>
+         <tcp_vdot vector3="0 -1 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="4" desc="rotation 45deg without second-joint-velocity checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0.785398 0.785398"/>
+         <joints_qdot vector_n=" 1 0"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" 0 1.20711"/>
+         <tcp_r vector3="-1.20711 1.20711 0.707107"/>
+         <tcp_R matrix3x3="0.707107 -0.5 0.5  0.707107 0.5 -0.5  0 0.707107 0.707107"/>
+         <tcp_v vector3="-1.70711 0 0"/>
+         <tcp_omega vector3="0 0.707107 0.707107"/>
+         <tcp_vdot vector3="0 -1.20711 1.20711"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+	</mbs>
+
+		<mbs file="aba_failure_2rot_sameaxis_without_lever_fixedbase.txt">
+		<model desc="Model with a minimal amount of element types. To test aba.">
+fixedbase base
+
+rotjoint j0 1 0 0
+rigidbody b2 _ _ _ _ _ _   1   1
+rotjoint j1 1 0 0
+rigidbody b2 0 1 0 _ _ _   1   1
+
+		</model>
+		<case nr="1" desc="rotation 90deg checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 1.5708 1.5708"/>
+         <joints_qdot vector_n=" 1 1"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" 0 0"/>
+         <tcp_r vector3="0 -1 0"/>
+         <tcp_R matrix3x3="1 0 0  0 -1 0  0 0 -1"/>
+         <tcp_v vector3="0 0 2"/>
+         <tcp_omega vector3="2 0 0"/>
+         <tcp_vdot vector3="0 -4 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="2" desc="rotation 45deg checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0.785398 0.785398"/>
+         <joints_qdot vector_n=" 1 1"/>
+         <joints_qdotdot vector_n=" 1 0"/>
+         <joints_tau vector_n=" 3 2"/>
+         <tcp_r vector3="0 0 1"/>
+         <tcp_R matrix3x3="1 0 0  0 0 -1  0 1 0"/>
+         <tcp_v vector3="0 0 2"/>
+         <tcp_omega vector3="2 0 0"/>
+         <tcp_vdot vector3="0 -4 1"/>
+         <tcp_omegadot vector3="1 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="3" desc="rotation 45deg without first-joint-velocity checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0.785398 0.785398"/>
+         <joints_qdot vector_n=" 0 1"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" 0 0"/>
+         <tcp_r vector3="0 0 1"/>
+         <tcp_R matrix3x3="1 0 0  0 0 -1  0 1 0"/>
+         <tcp_v vector3="0 0 1"/>
+         <tcp_omega vector3="1 0 0"/>
+         <tcp_vdot vector3="0 -1 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="4" desc="rotation 45deg without second-joint-velocity checked by RNE">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0.785398 0.785398"/>
+         <joints_qdot vector_n=" 1 0"/>
+         <joints_qdotdot vector_n=" 0 0"/>
+         <joints_tau vector_n=" 0 0"/>
+         <tcp_r vector3="0 0 1"/>
+         <tcp_R matrix3x3="1 0 0  0 0 -1  0 1 0"/>
+         <tcp_v vector3="0 0 1"/>
+         <tcp_omega vector3="1 0 0"/>
+         <tcp_vdot vector3="0 -1 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+	</mbs>
+
+	
+</mbs_test_set>

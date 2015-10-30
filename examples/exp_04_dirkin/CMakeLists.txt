@@ -1,0 +1,5 @@
+add_executable(exp_04_dirkin exp_04_dirkin.cpp)
+target_link_libraries(exp_04_dirkin mbslib)
+if(USE_ADOLC)
+ target_link_libraries(exp_04_dirkin ${ADOLC_LIBRARIES})
+endif(USE_ADOLC)

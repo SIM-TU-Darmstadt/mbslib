@@ -1,0 +1,100 @@
+% Model with a minimal amount of element types. To test aba.
+
+fixedbase base
+
+rotjoint j0 1 0 0
+rigidbody b2 _ _ _ _ _ _   1   1
+rotjoint j1 1 0 0
+rigidbody b2 0 1 0 _ _ _   1   1
+
+		
+
+endmodel
+
+rotation 90deg checked by RNE
+0.001
+0 0 0
+1 0 0  0 1 0  0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+ 1.5708 1.5708
+ 1 1
+ 0 0
+ 0 0
+0 -1 0
+1 0 0  0 -1 0  0 0 -1
+0 0 2
+2 0 0
+0 -4 0
+0 0 0
+0 0 0
+0 0 0
+
+rotation 45deg checked by RNE
+0.001
+0 0 0
+1 0 0  0 1 0  0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+ 0.785398 0.785398
+ 1 1
+ 1 0
+ 3 2
+0 0 1
+1 0 0  0 0 -1  0 1 0
+0 0 2
+2 0 0
+0 -4 1
+1 0 0
+0 0 0
+0 0 0
+
+rotation 45deg without first-joint-velocity checked by RNE
+0.001
+0 0 0
+1 0 0  0 1 0  0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+ 0.785398 0.785398
+ 0 1
+ 0 0
+ 0 0
+0 0 1
+1 0 0  0 0 -1  0 1 0
+0 0 1
+1 0 0
+0 -1 0
+0 0 0
+0 0 0
+0 0 0
+
+rotation 45deg without second-joint-velocity checked by RNE
+0.001
+0 0 0
+1 0 0  0 1 0  0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+ 0.785398 0.785398
+ 1 0
+ 0 0
+ 0 0
+0 0 1
+1 0 0  0 0 -1  0 1 0
+0 0 1
+1 0 0
+0 -1 0
+0 0 0
+0 0 0
+0 0 0

@@ -1,0 +1,49 @@
+testcase_basic.txt
+- gravitation
+- null
+
+testcase_basic_freebase.txt
+- gravitation
+- null
+- base v+omega
+- base R+v+omega (simple R=rot_x(90))
+- base R+v+omega (complex R=rot_x(45)*rot_y(30)*rot_z(90))
+
+dirDyn_2_single_prismaticjoint.txt
+- idle
+- simple joint force
+- external force (aligned)
+- external force (perpendicular)
+- external torque
+
+dirDyn_3_single_rotationaljoint.txt
+- idle
+- simple joint force
+- external torque (aligned)
+- external torque (perpendicular)
+- external force
+
+dirDyn_5_prismatic_and_rotationaljoint.txt
+- idle
+- only joint force+torque (no velocities)
+
+dirDyn_6_free_base_and_prismatic_joint_and_external forces.txt
+- idle
+- no joint force but external force
+- contract via joint force (no external forces)
+
+dirDyn_7_free_base_and_rotational_joint_and_external_torques.txt
+- idle
+- no joint torque but external torque
+- contract via joint torque (no external torque)
+
+invDyn_6_leverage.txt
+- idle
+- external force (does not have any effect -> model needs joints to get results!)
+
+invDyn_7_coriolis_and_centripetalforce.txt
+- idle
+- coriolis and centripetalforce: omega=3, v=4 <-> tcp, v,omega,vdot + joint force (no joint acc)
+
+2_rot_1_prism_joints.txt
+- idle

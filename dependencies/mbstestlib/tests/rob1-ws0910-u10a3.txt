@@ -1,0 +1,45 @@
+% Model from robotics lecture. BioRob-Arm.
+
+set l1 2
+set l1half 1
+set l2 3
+set l2half 1.5
+set l3 4
+set l3half 2
+set m1 2
+set m2 3
+set m3 4
+		
+fixedbase base
+
+rotjoint q1 0 0 1
+rigidbody t1 0 0 $l1  0 0 -$l1half  $m1  _ _ _ _ _ _ _ _ _
+rotjoint q2 0 -1 0
+rigidbody t2 -$l2 0 0  $l2half 0 0  $m2  _ _ _ _ _ _ _ _ _
+rotjoint q3 0 -1 0
+rigidbody t3 -$l3 0 0  $l3half 0 0  $m3  _ _ _ _ _ _ _ _ _
+		
+
+endmodel
+
+force to hold against gravitiy
+0.001
+0 0 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 -9.81
+0 0 0
+0 0 0
+0 0 0
+0 -240.345 -78.48
+-7 0 2
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0

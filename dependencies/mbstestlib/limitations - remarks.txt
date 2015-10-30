@@ -1,0 +1,9 @@
+- Using gravity or external force/torque will lead to unchecked acceleration propagation in DirKin.
+  The reason for this is the testset has to be specified in equilibrium, which is only valid if the
+  dynamics have been computed (which DirKin naturally doesn't).
+- the tests only check static conditions, no trajectories so far
+- setting base acceleration/velocity for a fixed based is forbidden (unspecified behaviour in most
+  frameworks)
+- when using a free base invDyn not allowed -> hybrid problem
+- (possibly/to decide) when using a free base acceleration and angular accerleration will not be set on the base - only checked
+  

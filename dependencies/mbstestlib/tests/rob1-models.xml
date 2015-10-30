@@ -1,0 +1,108 @@
+<mbs_test_set>
+	<mbs file="rob1-ws0910-u7a1.txt">
+		<model desc="Model from robotics lecture. 2rot+1prism joint - velocities check.">
+set l1 2
+set mass 1
+set inertia 1
+		
+fixedbase base
+
+rotjoint q1 0 0 1
+rotjoint q2 0 -1 0
+trans t1 0 -$l1 0
+prisjoint q3 0 0 -1
+rigidbody p0 _ _ _  _ _ _  $mass  $inertia
+		</model>
+		<case nr="1" desc="velocities in joints and endpoint">
+			<joints_q vector_n="0 0 3"/>
+			<joints_qdot vector_n="1 1 1"/>
+			<joints_qdotdot vector_n="0 0 0"/>
+			<joints_tau vector_n="4 6 -3"/>
+			<tcp_r vector3="0 -2 -3"/>
+			<tcp_v vector3="5 0 -1"/>
+			<tcp_omega vector3="0 -1 1"/>
+			<tcp_vdot vector3="2 8 3"/>
+			<tcp_omegadot vector3="1 0 0"/>
+		</case>
+	</mbs>
+	
+	<mbs file="rob1-ws0910-u10a3.txt">
+		<model desc="Model from robotics lecture. BioRob-Arm.">
+set l1 2
+set l1half 1
+set l2 3
+set l2half 1.5
+set l3 4
+set l3half 2
+set m1 2
+set m2 3
+set m3 4
+		
+fixedbase base
+
+rotjoint q1 0 0 1
+rigidbody t1 0 0 $l1  0 0 -$l1half  $m1  _ _ _ _ _ _ _ _ _
+rotjoint q2 0 -1 0
+rigidbody t2 -$l2 0 0  $l2half 0 0  $m2  _ _ _ _ _ _ _ _ _
+rotjoint q3 0 -1 0
+rigidbody t3 -$l3 0 0  $l3half 0 0  $m3  _ _ _ _ _ _ _ _ _
+		</model>
+		<case nr="1" desc="force to hold against gravitiy">
+			<gravitiy vector3="0 0 -9.81"/>
+			<joints_q vector_n="0 0 0"/>
+			<joints_qdot vector_n="0 0 0"/>
+			<joints_qdotdot vector_n="0 0 0"/>
+			<joints_tau vector_n="0 -240.345 -78.48"/>
+			<tcp_r vector3="-7 0 2"/>
+		</case>
+	</mbs>
+	
+	<mbs file="rob1-ws0910-u11a3.txt">
+		<model desc="Model from robotics lecture. Rot+Prism joint (sort of pendulum).">
+set l1 2
+set m1 2
+set m2 3
+		
+fixedbase base
+
+rotjoint q1 0 0 1
+rigidbody t1 $l1 0 0  0 0 0  $m1  _ _ _ _ _ _ _ _ _
+prisjoint q2 0 1 0
+rigidbody t2 0 0 0  0 0 0  $m2  _ _ _ _ _ _ _ _ _
+		</model>
+		<case nr="1" desc="force to hold against gravitiy (q2=4)">
+			<gravitiy vector3="9.81 0 0"/>
+			<joints_q vector_n="0 4"/>
+			<joints_qdot vector_n="0 0"/>
+			<joints_qdotdot vector_n="0 0"/>
+			<joints_tau vector_n="117.72 0"/>
+			<tcp_r vector3="2 4 0"/>
+		</case>
+	</mbs>
+	
+	<mbs file="rob1-ws0910-u11a1.txt">
+		<model desc="Model from robotics lecture. 2rot joints.">
+set l1 1
+set m1 1
+		
+fixedbase base
+
+rotjoint q1 0 0 1
+rot r1 1 0 0 -1.570796326794896619
+rotjoint q2 0 0 1
+rigidbody t1 1 0 0  _ _ _  $m1  _ _ _ _ _ _ _ _ _
+		</model>
+		<case nr="1" desc="force to hold against gravitiy (q2=4)">
+			<joints_q vector_n="0 -1.047197551196597"/>
+			<joints_qdot vector_n="1 0"/>
+			<joints_qdotdot vector_n="0 0"/>
+			<joints_tau vector_n="0 -0.433012701892219323"/>
+			<tcp_r vector3="0.5 0 0.86602540378443864"/>
+			<tcp_R matrix3x3="0.5 0.86602540378443864 0  0 0 1  0.86602540378443864 -0.5 0"/>
+			<tcp_v vector3="0 0 0.5"/>
+			<tcp_omega vector3="0.86602540378443864 -0.5 0"/>
+			<tcp_vdot vector3="-0.25 -0.433012701892219323 0"/>
+		</case>
+	</mbs>
+
+</mbs_test_set>

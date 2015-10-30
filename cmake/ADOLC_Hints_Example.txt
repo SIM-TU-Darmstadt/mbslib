@@ -1,0 +1,2 @@
+set(ADOLC_INCLUDE_DIR "/Users/martin/adolc_base/include/")
+set(ADOLC_LIBRARIES "/Users/martin/adolc_base/lib64/libadolc.so")

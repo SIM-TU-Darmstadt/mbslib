@@ -1,0 +1,38 @@
+% Model from robotics lecture. 2rot+1prism joint - velocities check.
+
+set l1 2
+set mass 1
+set inertia 1
+		
+fixedbase base
+
+rotjoint q1 0 0 1
+rotjoint q2 0 -1 0
+trans t1 0 -$l1 0
+prisjoint q3 0 0 -1
+rigidbody p0 _ _ _  _ _ _  $mass  $inertia
+		
+
+endmodel
+
+velocities in joints and endpoint
+0.001
+0 0 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 3
+1 1 1
+0 0 0
+4 6 -3
+0 -2 -3
+1 0 0 0 1 0 0 0 1
+5 0 -1
+0 -1 1
+2 8 3
+1 0 0
+0 0 0
+0 0 0

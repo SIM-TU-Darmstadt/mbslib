@@ -1,0 +1,5 @@
+add_executable(exp_02_6dof exp_02_6dof.cpp)
+target_link_libraries(exp_02_6dof mbslib)
+if(USE_ADOLC)
+ target_link_libraries(exp_02_6dof ${ADOLC_LIBRARIES})
+endif(USE_ADOLC)

@@ -1,0 +1,33 @@
+done - add proper base for all stuff that needs integration, three methods: 
+  -- integrate
+  -- store
+  -- restore
+
+done - add proper base for force generators with a control-value and handle this properly, especially when deriving sensitivity matrices
+
+- think about a validity flag for the equilibrum-condition of compounds
+
+done think about a way to handle derived classes inheriting parameters (currently only the parameters of the child class are exposed through the parameter interface)
+
+- todo: in MuscleModel: enforce derivatives by introducing two separate methods for force dforce/du and checking for the derivemode in Musclemodel itself
+
+- todo: get rid of drives in MbsCompound. think about a good way to achieve this goal.
+
+done expand IControllable to accept more than one control value. This also requires changes to the way control-values are accessed through MbsCompound! 
+
+done expand IControllable to be more talkative about the control-value.
+
+- todo: check if Sensitivity-Calculation is compatible with gravity
+
+- todo: add a derive-mode for spring-models by l and dl
+
+- todo: fix isnan-issue in types.h so that it works on all platforms
+
+done - make a master CMakeLists.txt in the project's root directory
+
+done - make tutorials build with adolc, should be simple :-) yes, it was ;-)
+
+done - when adding objects with IIntegrate, sort them into joints and non joints, count states and provide methods to access the state-vectors of the mbs
+
+done - add method to ask for IIntegrate to IForceGenerator. This way, a ForceGenerator can be asked whether it is stageful, but needs not be a subclass of IIntegrate
+

@@ -1,0 +1,54 @@
+fixedbase base
+
+rotjoint j2 0 1 0
+trans t1 1 0 0
+rotjoint j3 1 0 0
+prisjoint j4 0 1 0
+
+%mass 4
+%inertia 3 0 0 0 3 0 0 0 3
+%point c1
+rigidbody b0 _ _ _  _ _ _  4  3 0 0 0 3 0 0 0 3
+
+
+endmodel
+
+idle
+
+0.001
+
+0 0 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+
+0 0 0
+
+0
+0
+1
+
+0
+0
+0
+
+0
+0
+0
+
+0
+0
+0
+
+1 1 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+
+0 0 0
+0 0 0
+

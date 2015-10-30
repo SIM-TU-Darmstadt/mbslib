@@ -1,0 +1,287 @@
+/*
+ * Copyright (C) 2015
+ * Simulation, Systems Optimization and Robotics Group (SIM)
+ * Technische Universitaet Darmstadt
+ * Hochschulstr. 10
+ * 64289 Darmstadt, Germany
+ * www.sim.tu-darmstadt.de
+ *
+ * This file is part of the MBSlib.
+ * All rights are reserved by the copyright holder.
+ *
+ * MBSlib is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation in version 3 of the License.
+ *
+ * The MBSlib is distributed WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with MBSlib.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ * \file src/example/exp_14_parameters.cpp
+ * 
+ */
+
+#define BOOST_TEST_MODULE ParametrizedObject
+#include <boost/test/included/unit_test.hpp>
+#include <boost/test/included/unit_test_framework.hpp>
+#include <mbslib/mbslib.hpp>
+#include <mbslib/mbslib.muscle.models.hpp>
+#include <iostream>
+
+using namespace mbslib;
+
+class Test : public ParametrizedObject {
+public:
+    Test()
+        : ParametrizedObject("Test") {
+    }
+
+    START_PARAMETER_LIST
+    PARAMETER(A, a, a)
+    PARAMETER(B, b, b)
+    END_PARAMETER_LIST
+
+protected:
+    TScalar a;
+    TScalar b;
+};
+
+class Test2 : public Test {
+    CONTINUE_PARAMETER_LIST(Test)
+    PARAMETER(C, c, c)
+    END_PARAMETER_LIST
+protected:
+    TScalar c;
+};
+
+#include <mbslib/parameter/ParameterAdapter.hpp>
+
+BOOST_AUTO_TEST_CASE(static_parameter_test_1) {
+
+    Test t;
+    std::cout << t.getParameterCount() << std::endl;
+    BOOST_REQUIRE(t.getParameterCount() == 2);
+
+    for (unsigned int i = 0; i < t.getParameterCount(); i++) {
+        std::cout << i << ":" << t.getParameterName(i) << std::endl;
+    }
+    BOOST_REQUIRE(t.getParameterName(0) == "A");
+    BOOST_REQUIRE(t.getParameterName(1) == "B");
+
+    t.setParameter(0, 100);
+    t.setParameter(1, 101);
+    std::cout << std::endl;
+    std::cout << t.getParameter(0) << std::endl;
+    std::cout << t.getParameter(1) << std::endl;
+
+    BOOST_CHECK(t.getParameter(0) == 100);
+    BOOST_CHECK(t.getParameter(1) == 101);
+
+    t.setParameter(0, 200);
+    t.setParameter(1, 201);
+    std::cout << std::endl;
+    std::cout << t.getParameter(0) << std::endl;
+    std::cout << t.getParameter(1) << std::endl;
+
+    BOOST_CHECK(t.getParameter(0) == 200);
+    BOOST_CHECK(t.getParameter(1) == 201);
+
+    ParameterAdapter A = t.getParameterAdapter("A");
+    ParameterAdapter B = t.getParameterAdapter("B");
+    ParameterAdapter C = t.getParameterAdapter("C");
+
+    std::cout << (A.isValid() == true) << B.isValid() << C.isValid() << std::endl;
+
+    BOOST_REQUIRE(A.isValid());
+    BOOST_REQUIRE(B.isValid());
+    BOOST_REQUIRE(!C.isValid());
+
+    TScalar b = B;
+    std::cout << b << std::endl;
+
+    BOOST_CHECK(b == 201);
+
+    A = 1;
+    std::cout << t.getParameter(0) << std::endl;
+    TScalar a = A;
+    std::cout << a << std::endl;
+    BOOST_CHECK(t.getParameter(0) == 1);
+    BOOST_CHECK(a == 1);
+
+    std::cout << "......." << std::endl;
+}
+
+BOOST_AUTO_TEST_CASE(static_parameter_test_continued) {
+
+    Test2 t2;
+
+    std::cout << t2.getParameterCount() << std::endl;
+    BOOST_REQUIRE(t2.getParameterCount() == 3);
+
+    for (unsigned int i = 0; i < t2.getParameterCount(); i++) {
+        std::cout << i << ":" << t2.getParameterName(i) << std::endl;
+    }
+
+    ParameterAdapter A = t2.getParameterAdapter("A");
+    ParameterAdapter B = t2.getParameterAdapter("B");
+    ParameterAdapter C = t2.getParameterAdapter("C");
+    ParameterAdapter D = t2.getParameterAdapter("D");
+
+    A = 1;
+    B = 2;
+    C = 3;
+
+    std::cout << (A.isValid() == true) << B.isValid() << C.isValid() << D.isValid() << std::endl;
+
+    BOOST_REQUIRE(A.isValid());
+    BOOST_REQUIRE(B.isValid());
+    BOOST_REQUIRE(C.isValid());
+    BOOST_REQUIRE(!D.isValid());
+
+    std::cout << t2.getParameter(0) << " " << t2.getParameter(1) << " " << t2.getParameter(2) << " " << std::endl;
+
+    t2.setParameter(0, 101);
+    t2.setParameter(1, 102);
+    t2.setParameter(2, 103);
+
+    std::cout << t2.getParameter(0) << " " << t2.getParameter(1) << " " << t2.getParameter(2) << " " << std::endl;
+
+    BOOST_CHECK(t2.getParameter(0) == 101);
+    BOOST_CHECK(t2.getParameter(1) == 102);
+    BOOST_CHECK(t2.getParameter(2) == 103);
+
+    std::cout << TScalar(A) << " " << TScalar(B) << " " << TScalar(C) << std::endl;
+}
+
+class Test3 : public Test2 {
+    CONTINUE_PARAMETER_LIST(Test2)
+    PARAMETER(D, d, d)
+    END_PARAMETER_LIST
+    Test3() {
+        addParameter("E", e);
+        addParameter("F", [&]() { return f; }, [&](TScalar t) { f = t; });
+        addParameterAlias(5, "b.F");
+        addParameterAlias("F", "bb.F");
+
+        addParameterToGroup("G1", "E");
+        addParameterToGroup("G1", "b.F");
+        addParameterToGroup("G1", "F");
+        addParameterToGroup("G1", "bb.F");
+    }
+
+protected:
+    TScalar d;
+    TScalar e;
+    TScalar f;
+};
+
+BOOST_AUTO_TEST_CASE(static_parameter_test_continued_2) {
+
+    boost::property_tree::ptree pt;
+    std::cout << "put b.F" << std::endl;
+    pt.put("b.F", "bbbb");
+    std::cout << "b.F" << pt.get< std::string >("b.F") << std::endl;
+    pt.put("bb.F", 123);
+    std::cout << "bb.F" << pt.get< std::string >("bb.F") << std::endl;
+
+    {
+        Test2 t;
+        std::cout << "put b.G" << std::endl;
+        pt.put("b.G", reinterpret_cast< std::uintptr_t >(&t));
+        std::cout << "b.G: " << pt.get< std::string >("b.G") << std::endl;
+        std::cout << "count b.G: " << pt.count("b.G") << std::endl;
+        boost::optional< std::string > opt = pt.get_optional< std::string >("b.G");
+        if (opt.is_initialized()) {
+            std::cout << "b.G: " << opt.get() << std::endl;
+        }
+    }
+    Test3 t;
+
+    std::cout << t.getParameterCount() << std::endl;
+    BOOST_REQUIRE(t.getParameterCount() == 6);
+
+    for (unsigned int i = 0; i < t.getParameterCount(); i++) {
+        std::cout << i << ":" << t.getParameterName(i) << std::endl;
+    }
+
+    ParameterAdapter A = t.getParameterAdapter("A");
+    ParameterAdapter B = t.getParameterAdapter("B");
+    ParameterAdapter C = t.getParameterAdapter("C");
+    ParameterAdapter D = t.getParameterAdapter("D");
+    ParameterAdapter E = t.getParameterAdapter("E");
+    ParameterAdapter F = t.getParameterAdapter("F");
+    ParameterAdapter G = t.getParameterAdapter("b.F");
+    ParameterAdapter H = t.getParameterAdapter("bb.F");
+
+    A = 1;
+    B = 2;
+    C = 3;
+    D = 4;
+    E = 5;
+    F = 6;
+
+    std::cout << (A.isValid() == true) << B.isValid() << C.isValid() << D.isValid() << E.isValid() << F.isValid() << std::endl;
+
+    BOOST_REQUIRE(A.isValid());
+    BOOST_REQUIRE(B.isValid());
+    BOOST_REQUIRE(C.isValid());
+    BOOST_REQUIRE(D.isValid());
+    BOOST_REQUIRE(E.isValid());
+    BOOST_REQUIRE(F.isValid());
+    BOOST_REQUIRE(G.isValid());
+    BOOST_REQUIRE(H.isValid());
+
+    std::cout << t.getParameter(0)
+              << " " << t.getParameter(1)
+              << " " << t.getParameter(2)
+              << " " << t.getParameter(3)
+              << " " << t.getParameter(4)
+              << " " << t.getParameter(5)
+              << " " << std::endl;
+
+    t.setParameter(0, 101);
+    t.setParameter(1, 102);
+    t.setParameter(2, 103);
+    t.setParameter(3, 104);
+    t.setParameter(4, 105);
+    t.setParameter(5, 106);
+
+    std::cout << t.getParameter(0)
+              << " " << t.getParameter(1)
+              << " " << t.getParameter(2)
+              << " " << t.getParameter(3)
+              << " " << t.getParameter(4)
+              << " " << t.getParameter(5)
+              << " " << std::endl;
+
+    BOOST_CHECK(t.getParameter(0) == 101);
+    BOOST_CHECK(t.getParameter(1) == 102);
+    BOOST_CHECK(t.getParameter(2) == 103);
+    BOOST_CHECK(t.getParameter(3) == 104);
+    BOOST_CHECK(t.getParameter(4) == 105);
+    BOOST_CHECK(t.getParameter(5) == 106);
+
+    std::cout << TScalar(A) << " " << TScalar(B) << " " << TScalar(C) << std::endl;
+    std::cout << TScalar(D) << " " << TScalar(E) << " " << TScalar(F) << std::endl;
+    std::cout << TScalar(G) << " " << TScalar(H) << std::endl;
+
+    std::vector< std::string > parameterGroupNames = t.getParameterGroupNames();
+    for (std::string gname : parameterGroupNames) {
+        std::cout << "group: " << gname << std::endl;
+        std::vector< ParameterAdapter > parameters = t.getParametersOfGroup(gname);
+        for (ParameterAdapter & pa : parameters) {
+            std::cout << "group: " << gname << " parameter: " << pa.getName() << " value: " << TScalar(pa) << std::endl;
+        }
+    }
+}
+//int main(void){
+//  Test t;
+//  std::cout << t.getParameterCount() << std::endl;
+
+//  return 0;
+//}

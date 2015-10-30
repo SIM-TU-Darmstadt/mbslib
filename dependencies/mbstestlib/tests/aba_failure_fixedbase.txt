@@ -1,0 +1,79 @@
+% Model with a minimal amount of element types. To test aba.
+
+fixedbase base
+
+prisjoint j0 0 1 0
+
+rotjoint j1 1 0 0
+% rigidbody without translation works fine! (changing translation in x-direction also)
+rigidbody b2 0 1 0 0 0 0   1   1 1 1
+
+		
+
+endmodel
+
+rotation 90deg checked by RNE
+0.001
+0 0 0
+1 0 0  0 1 0  0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+ 1 1.5708
+ 1 1
+ 0 0
+ 0 0
+0 1 1
+1 0 0  0 0 -1  0 1 0
+0 0 0
+1 0 0
+0 -1 0
+0 0 0
+0 0 0
+0 0 0
+
+rotation 45deg checked by RNE
+0.001
+0 0 0
+1 0 0  0 1 0  0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+ 0 0.785398
+ 1 1
+ 0 0
+ -0.707107 0
+0 0.707107 0.707107
+1 0 0  0 0.707107 -0.707107  0 0.707107 0.707107
+0 0.707107 0.292893
+1 0 0
+0 -1 0
+0 0 0
+0 0 0
+0 0 0
+
+rotation 45deg without prism-joint-velocity checked by RNE
+0.001
+0 0 0
+1 0 0  0 1 0  0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+ 1 0.785398
+ 0 1
+ 0 0
+ -0.707107 0
+0 1.70711 0.707107
+1 0 0  0 0.707107 -0.707107  0 0.707107 0.707107
+0 0 1
+1 0 0
+0 -1 0
+0 0 0
+0 0 0
+0 0 0

@@ -1,0 +1,5 @@
+add_executable(exp_08_jacobian exp_08_jacobian.cpp)
+target_link_libraries(exp_08_jacobian mbslib)
+if(USE_ADOLC)
+ target_link_libraries(exp_08_jacobian ${ADOLC_LIBRARIES})
+endif(USE_ADOLC)

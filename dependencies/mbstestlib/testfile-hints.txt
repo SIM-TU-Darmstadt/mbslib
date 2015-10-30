@@ -1,0 +1,74 @@
+1) murosimf model
+
+2) 'endmodel' to mark the end of the model and the beginning of the testvalues
+
+3) (possibly serveral datasets:)
+   leading decsription (one line)
+
+   testvalues (in the following order + dimension):
+	delta				1
+	
+	base_r				3
+	base_R				9
+	base_v				3
+	base_omega			3
+	base_vdot			3
+	base_omegadot			3
+
+	gravitiy			3
+
+	joint(0)_q			1
+ 	 ...
+	joint(n-1)_q			1
+	joint(0)_qdot			1
+	 ...
+	joint(n-1)_qdot			1
+	joint(0)_qdotdot		1
+	 ...
+	joint(n-1)_qdotdot		1
+	joint(0)_tau			1
+	 ...
+	joint(n-1)_tau			1
+
+	tcp_r				3
+	tcp_R				9
+	tcp_v				3
+	tcp_omega			3
+	tcp_vdot			3
+	tcp_omegadot			3
+
+	f_ext				3
+	n_ext				3
+
+
+Example:
+
+------------------------------------------
+fixedbase base
+mass 1
+inertia 1 0 0 0 1 0 0 0 1
+point c1
+
+endmodel
+
+gravity test
+
+0.001
+
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+
+0 0 -9.81
+
+0 0 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+
+0 0 0
+0 0 0
+------------------------------------------

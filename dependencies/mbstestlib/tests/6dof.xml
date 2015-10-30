@@ -1,0 +1,238 @@
+<mbs_test_set>
+	<mbs file="6dof.txt">
+		<model desc="Model with 6 DOF in form of rotational joints. Also uses fixed rotations.">
+set l1 2
+set l1half 1
+set mass 1
+set inertia 1
+		
+fixedbase base
+
+% 45 deg fixed rot (z-axis):
+rot fr0 0 0 1 0.785398
+rigidbody b0 $l1 _ _  _ _ _  $mass  $inertia
+rotjoint r0 0 0 1
+rigidbody b1 $l1 _ _  _ _ _  $mass  $inertia
+rotjoint r1 0 0 1
+rigidbody b2 $l1 _ _  _ _ _  $mass  $inertia
+rotjoint r2 0 0 1
+rigidbody b3 $l1 _ _  _ _ _  $mass  $inertia
+rotjoint r3 0 0 1
+rigidbody b4 $l1 _ _  _ _ _  $mass  $inertia
+rotjoint r4 0 0 1
+rigidbody b5 $l1 _ _  _ _ _  $mass  $inertia
+rotjoint r5 0 0 1
+rigidbody b6 $l1 _ _  _ _ _  $mass  $inertia
+		</model>
+		<case nr="1" desc="initial position">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0 0 0 0 0 0"/>
+         <joints_qdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_qdotdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_tau vector_n=" 0 0 0 0 0 0"/>
+         <tcp_r vector3="9.8995 9.89949 0"/>
+         <tcp_R matrix3x3="0.707107 -0.707107 0  0.707107 0.707107 0  0 0 1"/>
+         <tcp_v vector3="0 0 0"/>
+         <tcp_omega vector3="0 0 0"/>
+         <tcp_vdot vector3="0 0 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		
+		<case nr="2" desc="initial position + joint velocity">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" 0 0 0 0 0 0"/>
+         <joints_qdot vector_n=" 1 1 1 1 1 1"/>
+         <joints_qdotdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_tau vector_n=" 0 0 0 0 0 0"/>
+         <tcp_r vector3="9.8995 9.89949 0"/>
+         <tcp_R matrix3x3="0.707107 -0.707107 0  0.707107 0.707107 0  0 0 1"/>
+         <tcp_v vector3="0 42 0"/>
+         <tcp_omega vector3="0 0 6"/>
+         <tcp_vdot vector3="-182 0 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		
+		<case nr="3" desc="initial position + gravitiy">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 -9.81 0"/>
+         <joints_q vector_n=" 0 0 0 0 0 0"/>
+         <joints_qdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_qdotdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_tau vector_n=" 291.342 208.102 138.734 83.2406 41.6203 13.8734"/>
+         <tcp_r vector3="9.8995 9.89949 0"/>
+         <tcp_R matrix3x3="0.707107 -0.707107 0  0.707107 0.707107 0  0 0 1"/>
+         <tcp_v vector3="0 0 0"/>
+         <tcp_omega vector3="0 0 0"/>
+         <tcp_vdot vector3="0 0 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		
+		
+		<case nr="4" desc="initial position + gravitiy + ext forces">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 -9.81 0"/>
+         <joints_q vector_n=" 0 0 0 0 0 0"/>
+         <joints_qdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_qdotdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_tau vector_n=" 278.342 197.102 129.734 76.2406 36.6203 10.8734"/>
+         <tcp_r vector3="9.8995 9.89949 0"/>
+         <tcp_R matrix3x3="0.707107 -0.707107 0  0.707107 0.707107 0  0 0 1"/>
+         <tcp_v vector3="0 0 0"/>
+         <tcp_omega vector3="0 0 0"/>
+         <tcp_vdot vector3="0 0 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="1 1 1"/>
+         <n_ext vector3="1 1 1"/>
+		</case>
+		
+		<case nr="5" desc="random position">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" -0.856610262479 -0.689238368125 -0.36562757461 0.292640188564 0.449660619156 0.00149900497426"/>
+         <joints_qdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_qdotdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_tau vector_n="0 0 0 0 0 0"/>
+         <tcp_r vector3="10.7734 -4.88747 0"/>
+         <tcp_R matrix3x3="0.927817 0.373035 0  -0.373035 0.927817 0  0 0 1"/>
+         <tcp_v vector3="0 0 0"/>
+         <tcp_omega vector3="0 0 0"/>
+         <tcp_vdot vector3="0 0 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		
+		<case nr="6" desc="random position + gravity">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 -9.81 0"/>
+         <joints_q vector_n=" -0.856610262479 -0.689238368125 -0.36562757461 0.292640188564 0.449660619156 0.00149900497426"/>
+         <joints_qdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_qdotdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_tau vector_n="316.423 199.001 127.925 94.163 54.5893 18.2038"/>
+         <tcp_r vector3="10.7734 -4.88747 0"/>
+         <tcp_R matrix3x3="0.927817 0.373035 0  -0.373035 0.927817 0  0 0 1"/>
+         <tcp_v vector3="0 0 0"/>
+         <tcp_omega vector3="0 0 0"/>
+         <tcp_vdot vector3="0 0 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+
+		<case nr="7" desc="random position + random joint velocities">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 0 0"/>
+         <joints_q vector_n=" -0.856610262479 -0.689238368125 -0.36562757461 0.292640188564 0.449660619156 0.00149900497426"/>
+         <joints_qdot vector_n=" 0.443373300614 0.445135957873 -0.107928440051 0.453110782477 -0.787727320247 0.532940638577"/>
+         <joints_qdotdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_tau vector_n="29.9992 -2.79597 -3.11263 13.079 15.6523 5.23108"/>
+         <tcp_r vector3="10.7734 -4.88747 0"/>
+         <tcp_R matrix3x3="0.927817 0.373035 0  -0.373035 0.927817 0  0 0 1"/>
+         <tcp_v vector3="2.51889 8.71475 0"/>
+         <tcp_omega vector3="0 0 0.978905"/>
+         <tcp_vdot vector3="-7.7921 2.61554 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+		
+		<case nr="8" desc="random position + gravity + random joint velocities">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 -9.81 0"/>
+         <joints_q vector_n=" -0.856610262479 -0.689238368125 -0.36562757461 0.292640188564 0.449660619156 0.00149900497426"/>
+         <joints_qdot vector_n=" 0.443373300614 0.445135957873 -0.107928440051 0.453110782477 -0.787727320247 0.532940638577"/>
+         <joints_qdotdot vector_n=" 0 0 0 0 0 0"/>
+         <joints_tau vector_n="346.422 196.205 124.813 107.242 70.2416 23.4349"/>
+         <tcp_r vector3="10.7734 -4.88747 0"/>
+         <tcp_R matrix3x3="0.927817 0.373035 0  -0.373035 0.927817 0  0 0 1"/>
+         <tcp_v vector3="2.51889 8.71475 0"/>
+         <tcp_omega vector3="0 0 0.978905"/>
+         <tcp_vdot vector3="-7.7921 2.61554 0"/>
+         <tcp_omegadot vector3="0 0 0"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>
+
+		<case nr="9" desc="random position + gravity + random joint velocities + random joint accelerations">
+         <delta scalar="0.001"/>
+         <base_r vector3="0 0 0"/>
+         <base_R matrix3x3="1 0 0  0 1 0  0 0 1"/>
+         <base_v vector3="0 0 0"/>
+         <base_omega vector3="0 0 0"/>
+         <base_vdot vector3="0 0 0"/>
+         <base_omegadot vector3="0 0 0"/>
+         <gravitiy vector3="0 -9.81 0"/>
+         <joints_q vector_n=" -0.856610262479 -0.689238368125 -0.36562757461 0.292640188564 0.449660619156 0.00149900497426"/>
+         <joints_qdot vector_n=" 0.443373300614 0.445135957873 -0.107928440051 0.453110782477 -0.787727320247 0.532940638577"/>
+         <joints_qdotdot vector_n=" 0.468060440985 -0.547969384985 0.132402586411 0.021759945777 -0.997114229013 0.590335765338"/>
+         <joints_tau vector_n="334.161 180.709 110.198 94.8009 60.9719 19.9879"/>
+         <tcp_r vector3="10.7734 -4.88747 0"/>
+         <tcp_R matrix3x3="0.927817 0.373035 0  -0.373035 0.927817 0  0 0 1"/>
+         <tcp_v vector3="2.51889 8.71475 0"/>
+         <tcp_omega vector3="0 0 0.978905"/>
+         <tcp_vdot vector3="-8.00456 1.05835 0"/>
+         <tcp_omegadot vector3="0 0 -0.332525"/>
+         <f_ext vector3="0 0 0"/>
+         <n_ext vector3="0 0 0"/>
+		</case>		
+
+	</mbs>
+	
+
+</mbs_test_set>

@@ -1,0 +1,5 @@
+add_executable(exp_17_jfcontroller exp_17_jfcontroller.cpp)
+target_link_libraries(exp_17_jfcontroller mbslib)
+if(USE_ADOLC)
+ target_link_libraries(exp_17_jfcontroller ${ADOLC_LIBRARIES})
+endif(USE_ADOLC)

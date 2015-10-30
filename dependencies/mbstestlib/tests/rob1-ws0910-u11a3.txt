@@ -1,0 +1,37 @@
+% Model from robotics lecture. Rot+Prism joint (sort of pendulum).
+
+set l1 2
+set m1 2
+set m2 3
+		
+fixedbase base
+
+rotjoint q1 0 0 1
+rigidbody t1 $l1 0 0  0 0 0  $m1  _ _ _ _ _ _ _ _ _
+prisjoint q2 0 1 0
+rigidbody t2 0 0 0  0 0 0  $m2  _ _ _ _ _ _ _ _ _
+		
+
+endmodel
+
+force to hold against gravitiy (q2=4)
+0.001
+0 0 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+9.81 0 0
+0 4
+0 0
+0 0
+117.72 0
+2 4 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+0 0 0

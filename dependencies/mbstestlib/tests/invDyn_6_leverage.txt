@@ -1,0 +1,56 @@
+fixedbase base
+trans t0 0 1 0
+%mass 0
+%inertia 0 0 0 0 0 0 0 0 0
+%point c1
+rigidbody b0
+
+endmodel
+
+idle
+
+0.001
+
+0 0 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+
+0 0 0
+
+0 1 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+
+0 0 0
+0 0 0
+
+
+
+external force (does not have any effect -> model needs joints to get results!)
+
+0.001
+
+0 0 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+
+0 0 0
+
+0 1 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+
+0 0 -1
+0 0 0

@@ -1,0 +1,5 @@
+add_executable(exp_10_contact exp_10_contact.cpp)
+target_link_libraries(exp_10_contact mbslib)
+if(USE_ADOLC)
+ target_link_libraries(exp_10_contact ${ADOLC_LIBRARIES})
+endif(USE_ADOLC)

@@ -1,0 +1,53 @@
+<mbs_test_set>
+	<mbs file="testset-example.txt">
+		<model desc="simple model">
+fixedbase base
+prisjoint t0 1 0 0
+rigidbody b0 _ _ _  _ _ _  2  _ _ _ _ _ _ _ _ _
+		</model>
+		<case nr="1" desc="some configuration">
+			<delta scalar="0.001"/>
+			<base_r vector3="0 0 0"/>
+			<base_R matrix3x3="1 0 0 0 1 0 0 0 1"/>
+			<base_v vector3="0 0 0"/>
+			<base_omega vector3="0 0 0"/>
+			<base_vdot vector3="0 0 0"/>
+			<base_omegadot vector3="0 0 0"/>
+			<gravitiy vector3="0 0 0"/>
+			<joints_q vector_n="0"/>
+			<joints_qdot vector_n="0"/>
+			<joints_qdotdot vector_n="0"/>
+			<joints_tau vector_n="0"/>
+			<tcp_r vector3="0 0 0"/>
+			<tcp_R matrix3x3="1 0 0 0 1 0 0 0 1"/>
+			<tcp_v vector3="0 0 0"/>
+			<tcp_omega vector3="0 0 0"/>
+			<tcp_vdot vector3="0 0 0"/>
+			<tcp_omegadot vector3="0 0 0"/>
+			<f_ext vector3="0 0 0"/>
+			<n_ext vector3="0 0 0"/>
+		</case>
+		<case nr="2" desc="some other configuration">
+			<delta scalar="0.001"/>
+			<base_r vector3="0 0 0"/>
+			<base_R matrix3x3="1 0 0 0 1 0 0 0 1"/>
+			<base_v vector3="0 0 0"/>
+			<base_omega vector3="0 0 0"/>
+			<base_vdot vector3="0 0 0"/>
+			<base_omegadot vector3="0 0 0"/>
+			<gravitiy vector3="0 0 0"/>
+			<joints_q vector_n="0"/>
+			<joints_qdot vector_n="0"/>
+			<joints_qdotdot vector_n="0"/>
+			<joints_tau vector_n="0"/>
+			<tcp_r vector3="0 0 0"/>
+			<tcp_R matrix3x3="1 0 0 0 1 0 0 0 1"/>
+			<tcp_v vector3="0 0 0"/>
+			<tcp_omega vector3="0 0 0"/>
+			<tcp_vdot vector3="0 0 0"/>
+			<tcp_omegadot vector3="0 0 0"/>
+			<f_ext vector3="0 0 0"/>
+			<n_ext vector3="0 0 0"/>
+		</case>		
+	</mbs>
+</mbs_test_set>

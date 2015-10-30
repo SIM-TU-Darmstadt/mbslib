@@ -1,0 +1,75 @@
+<mbs_test_set>
+	<mbs file="joint_velocity.txt">
+		<model desc="Model to with two branches each containing 2 joints with velocities. Compare results.">
+fixedbase base
+
+fork f0
+prisjoint t0 1 0 0
+prisjoint t1 0 1 0
+mass 1
+point p0
+
+prisjoint t2 0 1 0
+prisjoint t3 1 0 0
+rigidbody p1 _ _ _  _ _ _  1  _ _ _ _ _ _ _ _ _
+		</model>
+		<case nr="1" desc="velocities in joints">
+			<joints_q vector_n="1 1 1 1"/>
+			<joints_qdot vector_n="1 1 1 1"/>
+			<joints_qdotdot vector_n="0 0 0 0"/>
+			<joints_tau vector_n="0 0 0 0"/>
+			<tcp_r vector3="1 1 0"/>
+			<tcp_v vector3="1 1 0"/>
+		</case>
+	</mbs>
+	
+	<mbs file="joint_velocity2.txt">
+		<model desc="Model to with two branches each containing 2 joints with velocities. Compare results.">
+fixedbase base
+
+fork f0
+prisjoint t0 0 1 0
+prisjoint t1 1 0 0
+mass 1
+point p0
+
+prisjoint t2 1 0 0
+prisjoint t3 0 1 0
+rigidbody p1 _ _ _  _ _ _  1  _ _ _ _ _ _ _ _ _
+		</model>
+		<case nr="1" desc="velocities in joints">
+			<joints_q vector_n="1 1 1 1"/>
+			<joints_qdot vector_n="1 1 1 1"/>
+			<joints_qdotdot vector_n="0 0 0 0"/>
+			<joints_tau vector_n="0 0 0 0"/>
+			<tcp_r vector3="1 1 0"/>
+			<tcp_v vector3="1 1 0"/>
+		</case>
+	</mbs>
+	
+	<mbs file="joint_velocity2.txt">
+		<model desc="Model to with two branches each containing 2 joints with velocities. Compare results.">
+fixedbase base
+
+fork f0
+prisjoint t0 0 1 0
+prisjoint t1 1 0 0
+mass 1
+point p0
+
+prisjoint t2 1 0 0
+prisjoint t3 0 1 0
+rigidbody p1 _ _ _  _ _ _  1  _ _ _ _ _ _ _ _ _
+		</model>
+		<case nr="1" desc="velocities in joints">
+			<joints_q vector_n="1 1 1 1"/>
+			<joints_qdot vector_n="1 1 1 1"/>
+			<joints_qdotdot vector_n="0 0 0 0"/>
+			<joints_tau vector_n="0 0 0 0"/>
+			<tcp_r vector3="1 1 0"/>
+			<tcp_v vector3="1 1 0"/>
+		</case>
+	</mbs>
+	
+
+</mbs_test_set>

@@ -1,0 +1,5 @@
+add_executable(exp_14_parameters exp_14_parameters.cpp)
+target_link_libraries(exp_14_parameters mbslib)
+if(USE_ADOLC)
+ target_link_libraries(exp_14_parameters ${ADOLC_LIBRARIES})
+endif(USE_ADOLC)

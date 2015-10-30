@@ -1,0 +1,5 @@
+if(USE_ADOLC)
+add_executable(exp_09_kuka exp_09_kuka.cpp)
+target_link_libraries(exp_09_kuka mbslib)
+ target_link_libraries(exp_09_kuka ${ADOLC_LIBRARIES})
+endif(USE_ADOLC)

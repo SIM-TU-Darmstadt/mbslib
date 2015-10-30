@@ -1,0 +1,81 @@
+fixedbase base
+rotjoint j0 1 0 0
+prisjoint t0 0 1 0
+%mass 2
+%inertia 0 0 0 0 0 0 0 0 0
+%point c1
+rigidbody b0 _ _ _  _ _ _  2  _ _ _ _ _ _ _ _ _
+
+endmodel
+
+idle
+
+0.001
+
+0 0 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+
+0 0 0
+
+0
+1
+
+0
+0
+
+0
+0
+
+0
+0
+
+0 1 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+
+0 0 0
+0 0 0
+
+
+
+coriolis and centripetalforce: omega=3, v=4 --- tcp, v,omega,vdot + joint force (no joint acc)
+
+0.001
+
+0 0 0
+1 0 0 0 1 0 0 0 1
+0 0 0
+0 0 0
+0 0 0
+0 0 0
+
+0 0 0
+
+0
+1
+
+3
+4
+
+0
+0
+
+48
+-18
+
+0 1 0
+1 0 0 0 1 0 0 0 1
+0 4 3
+3 0 0
+0 -9 24
+0 0 0
+
+0 0 0
+0 0 0
