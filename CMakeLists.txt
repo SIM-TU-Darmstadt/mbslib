@@ -1,5 +1,9 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
+IF(NOT DEFINED CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "CMAKE_BUILD_TYPE: Choose the type of build, options are: None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release RelWithDebInfo MinSizeRel" FORCE)
+ENDIF()
+
 PROJECT (mbslib)
 
 SET ( MBSLIB_VERSION_MAJOR 0 )
@@ -38,8 +42,10 @@ option(USE_MBSLIB_OUTPUT_DIR "Build mbslib to build/output" ON)
 option(BUILD_EXTENSIONS "Build extensions" ON)
 option(BUILD_EXAMPLES "Build examples" ON)
 option(BUILD_APPLICATION "Build applications" ON)
+option(BUILD_TESTING "Build tests" ON)
 
 configure_file(src/mbslib/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/mbslib/config.hpp)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 SET(MBSLIB_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 SET(MBS_TEST_DIR "${MBSLIB_BASE_DIR}/dependencies/mbstestlib/tests")
@@ -185,6 +191,11 @@ ENDIF()
 if(BUILD_EXAMPLES)
 message("adding examples")
 add_subdirectory(examples)
+endif()
+
+if(BUILD_TESTING)
+message("adding tests")
+add_subdirectory(tests)
 endif()
 
 INSTALL(DIRECTORY include/mbslib DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

@@ -1,4 +1,8 @@
 # Setup BioRob
+IF(NOT ${USE_ADOLC})
+  return()
+ENDIF()
+
 set(BIN_NAME exp_21_biorob_parameter_identification)
 set(${BIN_NAME}_SRC
   biorob.h
