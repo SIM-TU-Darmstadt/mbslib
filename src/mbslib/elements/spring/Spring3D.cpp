@@ -26,9 +26,9 @@
  * Definition of mbslib ::Spring3D
  */
 
-#include <mbslib/elements/spring/Spring3D.hpp>
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <mbslib/elements/spring/Spring3D.hpp>
 
 namespace mbslib {
 
@@ -43,6 +43,7 @@ public:
         , length(0)
         , dLength(0) {
         direction.setZero();
+        vRel.setZero();
     }
 
     virtual ~SpringSegment() {
@@ -67,10 +68,17 @@ public:
     void calculateGeometry() {
         direction = end2.getCoordinateFrame().r - end1.getCoordinateFrame().r;
         length = direction.norm();
-        direction *= (length != 0) ? (1 / length) : (TScalar(0));
-        //dLength = (end2.getCoordinateFrame().R * end2.getCoordinateFrame().v - end1.getCoordinateFrame().R * end1.getCoordinateFrame().v).norm();
-        dLength = (end2.getCoordinateFrame().R * end2.getCoordinateFrame().v - end1.getCoordinateFrame().R * end1.getCoordinateFrame().v).dot(direction);
-        //std::cout << length << " " << dLength << " " << (end2.getCoordinateFrame().R * end2.getCoordinateFrame().v - end1.getCoordinateFrame().R * end1.getCoordinateFrame().v).norm() << std::endl;
+        vRel = end2.getCoordinateFrame().R * end2.getCoordinateFrame().v - end1.getCoordinateFrame().R * end1.getCoordinateFrame().v;
+        if(length != 0.0) {
+            direction *= (1/length);
+            dLength = vRel.dot(direction);
+        } else {
+            direction = vRel;
+            dLength = direction.norm();
+            if(dLength != 0) {
+                direction *= (1/dLength);
+            }
+        }
     }
 
     /**
@@ -96,6 +104,8 @@ private:
 
     /// Direction of the Segment.
     TVector3 direction;
+
+    TVector3 vRel;
 };
 
 Spring3D::Spring3D(const SpringModel & model, Endpoint & end1, Endpoint & end2, const std::string & name)
@@ -153,7 +163,9 @@ void Spring3D::applyForce() {
   if (deriveBy == 0)
     // if !deriveMode return Fpee, else if deriveMode return Fde (set valueID to 0)!
 */
+    //std::cout << "l " << l << " dl " << dl << std::endl;
     f = model->calculateForce(l, dl); // resulting muscle force
+    //std::cout << "f " << f << std::endl;
 
     ///  Apply force of the spring to the endpoints of the SpringSegment.
     for (SpringSegment * it : segments) {
