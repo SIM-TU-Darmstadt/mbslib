@@ -82,6 +82,15 @@ bool unitVector(const TVector6 & v, const std::string & name = "", const std::st
  */
 bool notNearZero(TScalar s, const std::string & name = "", const std::string & place = "", int line = 0);
 
+template<typename T>
+struct MinMaxStep {
+    T min;
+    T max;
+    T step;
+};
+
+typedef MinMaxStep<TScalar> MMSTs;
+
 } //namespace mbslib
 
 /**
