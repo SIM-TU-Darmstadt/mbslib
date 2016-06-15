@@ -623,7 +623,7 @@ public:
     *
     * \param fg  If non-null, the forcegenerator.
     */
-    void addForceGenerator(ForceGenerator * fg);
+    virtual void addForceGenerator(ForceGenerator * fg);
 
 private:
     /// Elements of the MBS.

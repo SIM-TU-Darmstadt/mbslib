@@ -37,7 +37,7 @@ int main(void) {
     b.addFixedBase();
     mbslib::Joint1DOF * j1 = b.addPrismaticJoint(mbslib::TVector3(0, 0, 1));
     mbslib::JointForceSetter * jfs = new mbslib::JointForceSetter(*j1);
-    b.addForceGenerator(*jfs);
+    b.addForceGenerator(jfs);
     b.addRigidLink(mbslib::TVector3::Zero(), mbslib::TVector3::Zero(), 1, mbslib::TMatrix3x3::Zero());
     b.addEndpoint();
 

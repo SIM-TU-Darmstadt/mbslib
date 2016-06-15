@@ -44,9 +44,7 @@ MbsCompoundWithBuilder::MbsCompoundWithBuilder(const std::string & name)
 }
 
 MbsCompoundWithBuilder::~MbsCompoundWithBuilder() {
-    //for(std::vector<Spring*>::iterator it = springs.begin(); it != springs.end(); it++){ delete (*it); }
-    //for(std::vector<Muscle*>::iterator it = muscles.begin(); it != muscles.end(); it++){ delete (*it); }
-    //for(std::vector<ForceGenerator*>::iterator it = forceGenerators.begin(); it != forceGenerators.end(); it++){ delete (*it); }
+    for(auto i : forceGenerators){ delete i; }
 }
 
 FixedBase * MbsCompoundWithBuilder::addFixedBase(const std::string & name) {
@@ -335,35 +333,35 @@ MbsObject * MbsCompoundWithBuilder::addElement(MbsObject * e) {
 Spring3D * MbsCompoundWithBuilder::addSpring(const SpringModel & model, const std::string & name) {
     Spring3D * spring = new Spring3D(model, name);
     springs.push_back(spring);
-    MbsCompound::addForceGenerator(spring);
+    addForceGenerator(spring);
     return spring;
 }
 
 Spring3D * MbsCompoundWithBuilder::addSpring(const SpringModel & model, std::vector< Endpoint * > points, const std::string & name) {
     Spring3D * spring = new Spring3D(model, points, name);
     springs.push_back(spring);
-    addForceGenerator(*spring);
+    addForceGenerator(spring);
     return spring;
 }
 
 Spring1D * MbsCompoundWithBuilder::addSpring(const SpringModel & model, Joint1DOF & j1, Joint1DOF & j2, const std::string & name) {
     Spring1D * spring = new Spring1D(model, j1, j2, name);
     springs.push_back(spring);
-    addForceGenerator(*spring);
+    addForceGenerator(spring);
     return spring;
 }
 
 Spring1DSingleEnded * MbsCompoundWithBuilder::addSpring(const SpringModel & model, Joint1DOF & j1, const std::string & name) {
     Spring1DSingleEnded * spring = new Spring1DSingleEnded(model, j1, name);
     springs.push_back(spring);
-    addForceGenerator(*spring);
+    addForceGenerator(spring);
     return spring;
 }
 
 Muscle * MbsCompoundWithBuilder::addMuscle(const MuscleModel & model, const std::string & name) {
     Muscle * muscle = new Muscle(model, name);
     muscles.push_back(muscle);
-    MbsCompound::addForceGenerator(muscle);
+    addForceGenerator(muscle);
     return muscle;
 }
 
@@ -381,9 +379,10 @@ TVectorX MbsCompoundWithBuilder::getMuscleControl(void) const {
     return c;
 }
 
-void MbsCompoundWithBuilder::addForceGenerator(ForceGenerator & fg) {
-    forceGenerators.push_back(&fg);
-    MbsCompound::addForceGenerator(&fg);
+void MbsCompoundWithBuilder::addForceGenerator(ForceGenerator *fg) {
+    if(fg == nullptr) return;
+    forceGenerators.push_back(fg);
+    MbsCompound::addForceGenerator(fg);
 }
 
 std::vector< MbsObject * > MbsCompoundWithBuilder::addDHJointLink(JointType jointType, TScalar dh_theta, TScalar dh_d, TScalar dh_a, TScalar dh_alpha, const TVector3 & com, TScalar m, const TMatrix3x3 & I, const std::string & jointName, const std::string & linkName) {

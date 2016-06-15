@@ -209,5 +209,6 @@ std::vector< Endpoint * > & Spring3D::getPoints() {
 }
 
 Spring3D::~Spring3D() {
+    for(auto i : segments) {delete i;}
 }
 } //namespace mbslib

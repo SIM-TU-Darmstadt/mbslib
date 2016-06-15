@@ -444,7 +444,7 @@ public:
    *
    * \param   fg  The force generator.
    */
-    void addForceGenerator(ForceGenerator & fg);
+    virtual void addForceGenerator(ForceGenerator * fg);
 
 protected:
     /**
