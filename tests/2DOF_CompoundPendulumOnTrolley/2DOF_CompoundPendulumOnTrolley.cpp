@@ -335,13 +335,14 @@ BOOST_AUTO_TEST_CASE(DirectDynamicsWithDrive){
                 std::cout << analyticalResult.transpose().format(LongFormat) << std::endl;
             };
 #endif
+            analyticalResult = calculateDirectDynamics(q,dq,tau,pendulumLength,pendulumMass,gravity,k,d);
+
             mbs->setJointPosition(q);
             mbs->setJointVelocity(dq);
             mbs->setJointForceTorque(tau);
             mbs->doForwardDrives();
             mbs->doCrba();
             mbslibResult = mbs->getJointAcceleration();
-            analyticalResult = calculateDirectDynamics(q,dq,tau,pendulumLength,pendulumMass,gravity,k,d);
             BOOST_CHECK((mbslibResult - analyticalResult).isZero(1e-10));
 
             mbs->setJointPosition(q);
@@ -350,7 +351,6 @@ BOOST_AUTO_TEST_CASE(DirectDynamicsWithDrive){
             mbs->doForwardDrives();
             mbs->doABA();
             mbslibResult = mbs->getJointAcceleration();
-            analyticalResult = calculateDirectDynamics(q,dq,tau,pendulumLength,pendulumMass,gravity,k,d);
             BOOST_CHECK((mbslibResult - analyticalResult).isZero(1e-10));
             //printResults();
         }

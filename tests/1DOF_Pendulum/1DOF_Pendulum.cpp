@@ -206,6 +206,7 @@ BOOST_AUTO_TEST_CASE(DirectDynamicsJointForceSetter) {
         for (TScalar tau = _tau.min; tau <= _tau.max; tau += _tau.step) {
         for (TScalar q_counter = _q_counter.min; q_counter <= _q_counter.max; q_counter += _q_counter.step) {
             q << q_counter / 180.0 * M_PI;
+            analyticalResult = calculateDirectDynamics(pendulumLength, q, tau, gravity, pendulumMass);
 
             mbs->setJointPosition(q);
 
@@ -214,13 +215,11 @@ BOOST_AUTO_TEST_CASE(DirectDynamicsJointForceSetter) {
             mbs->doABA();
 
             mbslibResult = mbs->getJointAcceleration();
-            analyticalResult = calculateDirectDynamics(pendulumLength, q, tau, gravity, pendulumMass);
             BOOST_CHECK((mbslibResult - analyticalResult).isZero());
 
             mbs->doCrba();
 
             mbslibResult = mbs->getJointAcceleration();
-            analyticalResult = calculateDirectDynamics(pendulumLength, q, tau, gravity, pendulumMass);
             BOOST_CHECK((mbslibResult - analyticalResult).isZero());
         }
         }

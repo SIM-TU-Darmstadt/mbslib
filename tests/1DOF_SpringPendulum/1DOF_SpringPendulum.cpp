@@ -37,8 +37,8 @@ TVector3 calculateDirectKinematics(TVectorX q) {
  * 		                m
  *
  * \param q joint position
+ * \param dq joint velocity
  * \param tau joint torque
- * \param dq joint force velocity
  * \param g gravity
  * \param m mass
  * \param d
@@ -149,6 +149,7 @@ BOOST_AUTO_TEST_CASE(DirectDynamics) {
                 std::cout << analyticalResult.format(LongFormat) << std::endl;
             };
 #endif
+            analyticalResult = calculateDirectDynamics(q, dq, tau, gravity, pendulumMass, springConstant, damperConstant);
 
             mbs->setJointPosition(q);
             mbs->setJointVelocity(dq);
@@ -158,7 +159,6 @@ BOOST_AUTO_TEST_CASE(DirectDynamics) {
 
             mbslibResult = mbs->getJointAcceleration();
             //TVectorX q, TVectorX dq, TScalar tau, TScalar g, TScalar m, TScalar k, TScalar d
-            analyticalResult = calculateDirectDynamics(q, dq, tau, gravity, pendulumMass, springConstant, damperConstant);
             //BOOST_CHECK((mbslibResult - analyticalResult).isZero());
             BOOST_CHECK(std::fabs(mbslibResult(0) - analyticalResult(0)) < 1e-10);
 
@@ -173,7 +173,6 @@ BOOST_AUTO_TEST_CASE(DirectDynamics) {
             mbs->doCrba();
 
             mbslibResult = mbs->getJointAcceleration();
-            analyticalResult = calculateDirectDynamics(q, dq, tau, gravity, pendulumMass, springConstant, damperConstant);
             BOOST_CHECK(std::fabs(mbslibResult(0) - analyticalResult(0)) < 1e-10);
             //BOOST_CHECK((mbslibResult - analyticalResult).isZero());
     #ifdef ERROR_PRINTOUT
