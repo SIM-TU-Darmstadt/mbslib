@@ -47,13 +47,7 @@ RigidLink::RigidLink(MbsObject & pred, const TVector3 & relr, const TVector3 & c
     this->I = I;
 
     //create ABA-Inertia
-    //at the beginning of the link, not at the CoF!!!
-    ///in a parameter-optimization scenario, this calculation must be done in each step, as parameters may change
-    TMatrix3x3 dispCross = makeCrossproductMatrix(fixedRelr + com);
-    abaI.block< 3, 3 >(0, 0) = I + m * dispCross * dispCross.transpose();
-    abaI.block< 3, 3 >(3, 0) = m * dispCross.transpose();
-    abaI.block< 3, 3 >(0, 3) = m * dispCross;
-    abaI.block< 3, 3 >(3, 3) = TMatrix3x3::Identity() * m;
+    updateABA();
 }
 
 RigidLink::RigidLink(MbsObject & pred, const RigidBodyDescription & rigidBodyDescription, const std::string & name)
@@ -67,13 +61,10 @@ RigidLink::RigidLink(MbsObject & pred, const RigidBodyDescription & rigidBodyDes
     checkInertia(m, I);
 
     //create ABA-Inertia
-    //at the beginning of the link, not at the CoF!!!
-    ///in a parameter-optimization scenario, this calculation must be done in each step, as parameters may change
-    TMatrix3x3 dispCross = makeCrossproductMatrix(fixedRelr + com);
-    abaI.block< 3, 3 >(0, 0) = I + m * dispCross * dispCross.transpose();
-    abaI.block< 3, 3 >(3, 0) = m * dispCross.transpose();
-    abaI.block< 3, 3 >(0, 3) = m * dispCross;
-    abaI.block< 3, 3 >(3, 3) = TMatrix3x3::Identity() * m;
+    updateABA();
+}
+
+RigidLink::~RigidLink() {
 }
 
 void RigidLink::doVelocity() {
@@ -250,5 +241,42 @@ const TVector3 & RigidLink::getFixedRelativePosition() const {
     return this->fixedRelr;
 }
 
-RigidLink::~RigidLink() {
+RigidLink& RigidLink::operator=(const RigidBodyDescription& rigidBodyDescription) {
+    this->com = rigidBodyDescription.com;
+    this->fixedRelr = rigidBodyDescription.r;
+    this->I = rigidBodyDescription.I;
+    this->m = rigidBodyDescription.m;
+    updateABA();
+    return *this;
+}
+
+void RigidLink::setCenterOfMass(const TVector3 & com) {
+    this->com = com;
+    updateABA();
+}
+
+void RigidLink::setFixedRelativePosition(const TVector3 &relr) {
+    this->fixedRelr = relr;
+    updateABA();
+}
+
+void RigidLink::setInertiaTensor(const TMatrix3x3 &I) {
+    this->I = I;
+    updateABA();
+}
+
+void RigidLink::setMass(const TScalar & m) {
+    this->m = m;
+    updateABA();
+}
+
+void RigidLink::updateABA() {
+    ///create ABA-Inertia
+    ///at the beginning of the link, not at the CoF!!!
+    ///in a parameter-optimization scenario, this calculation must be done in each step, as parameters may change
+    TMatrix3x3 dispCross = makeCrossproductMatrix(fixedRelr + com);
+    abaI.block< 3, 3 >(0, 0) = I + m * dispCross * dispCross.transpose();
+    abaI.block< 3, 3 >(3, 0) = m * dispCross.transpose();
+    abaI.block< 3, 3 >(0, 3) = m * dispCross;
+    abaI.block< 3, 3 >(3, 3) = TMatrix3x3::Identity() * m;
 }

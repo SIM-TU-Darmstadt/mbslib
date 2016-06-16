@@ -192,6 +192,32 @@ public:
    */
     const TVector3 & getFixedRelativePosition() const;
 
+    RigidLink& operator=(const RigidBodyDescription& rigidBodyDescription);
+
+    /**
+     * @brief Sets the center of mass vector.
+     * @param com The center of mass.
+     */
+    void setCenterOfMass(const TVector3 &com);
+
+    /**
+     * @brief Sets the relativ position.
+     * @param relr The fixed relative position.
+     */
+    void setFixedRelativePosition(const TVector3 & relr);
+
+    /**
+     * @brief Sets the inertia tensor of this rigid link.
+     * @param I The inertia tensor.
+     */
+    void setInertiaTensor(const TMatrix3x3 &I);
+
+    /**
+     * @brief Sets the mass of this rigid link.
+     * @param m The mass
+     */
+    void setMass(const TScalar & m);
+
 protected:
     /**
    * \brief Calculate relative pose of this element.
@@ -200,6 +226,11 @@ protected:
    * \param relR  The relative rotation.
    */
     virtual void calcRelPose(TVector3 & relr, TMatrix3x3 & relR);
+
+    /**
+     * @brief Updates ABA-Inertia
+     */
+    virtual void updateABA();
 
     /// relative tranlation from predecessor to own cof in predecessors cof (orientation is equal for both cofs).
     TVector3 fixedRelr;
