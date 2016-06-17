@@ -10,10 +10,15 @@
 #include <Eigen/Core>
 #include <Eigen/Householder>
 #include <Eigen/QR>
-#include <chrono>
 #include <random>
 
 using namespace mbslib;
+
+#define TOLERANCE 1e-9
+
+#define TEST_CHECK_EQUAL(A,B) MBS_TEST_CHECK_EQUAL(A,B,TOLERANCE)
+#define TEST_CHECK_EQUAL_RESULT(A,B,RESULT) MBS_TEST_CHECK_EQUAL_RESULT(A,B,RESULT,TOLERANCE)
+
 
 /**
  * \brief Calculate direct kinematics
@@ -315,8 +320,12 @@ BOOST_AUTO_TEST_CASE(DirectKinematics) {
 
                     analyticalResult = calculateDirectKinematics(q,l);
 
-                    BOOST_CHECK((mbslibResult[0] - analyticalResult[0]).isZero());
-                    BOOST_CHECK((mbslibResult[1] - analyticalResult[1]).isZero());
+                    TEST_CHECK_EQUAL(mbslibResult[0],analyticalResult[0]);
+
+                    TEST_CHECK_EQUAL(mbslibResult[1],analyticalResult[1]);
+
+                    //BOOST_CHECK((mbslibResult[0] - analyticalResult[0]).isZero());
+                    //BOOST_CHECK((mbslibResult[1] - analyticalResult[1]).isZero());
                     //        printResults();
                 }
             }
@@ -324,17 +333,13 @@ BOOST_AUTO_TEST_CASE(DirectKinematics) {
         }
     }
 }
-#define ERROR_PRINTOUT
 
-#define RAND_DYN_TEST
-#ifdef RAND_DYN_TEST
 BOOST_AUTO_TEST_CASE(DirectDynamicsRandom){
     std::cout << "Test case DirectDynamics" << std::endl;
     TVectorX l(2);
     TVectorX m(2);
 
     TScalar g = -9.81;
-    //TScalar g = 0.0;//-9.81;
 
     TVector3Vector r_com;
     r_com.assign(2, TVector3::Zero());
@@ -356,13 +361,13 @@ BOOST_AUTO_TEST_CASE(DirectDynamicsRandom){
 
     RigidBodyDescription rbd1, rbd2;
 
-    const MMSTs _q              {-10.0,   10.0,   5.0}; // 25
-    const MMSTs _dq             {-10.0,   10.0,   5.0}; // 25
-    const MMSTs _tau            {-10.0,   10.0,   5.0}; // 25
-    const MMSTs _l              {  0.1,   10.1,   2.5}; // 25
-    const MMSTs _m              {  0.1,   10.1,   2.5}; // 25
-    const MMSTs _r              { -0.0,    1.0,   0.5}; // 5^4 / 625
-    const MMSTs _I              {  0.0,    1.0,   0.25}; // 25
+    const MMSTs _q              {-10.0,   10.0,   5.0};
+    const MMSTs _dq             {-10.0,   10.0,   5.0};
+    const MMSTs _tau            {-10.0,   10.0,   5.0};
+    const MMSTs _l              {  0.1,   10.1,   2.5};
+    const MMSTs _m              {  0.1,   10.1,   2.5};
+    const MMSTs _r              { -0.0,    1.0,   0.5};
+    const MMSTs _I              {  0.0,    1.0,   0.25};
 
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -396,7 +401,7 @@ BOOST_AUTO_TEST_CASE(DirectDynamicsRandom){
             dq(1) = _dq_dis(gen);
             tau(0) = _tau_dis(gen);
             tau(1) =  _tau_dis(gen);
-#ifdef ERROR_PRINTOUT
+
             auto printResults = [&]() {
                 std::cout << "q "
                           << q.transpose()
@@ -417,7 +422,7 @@ BOOST_AUTO_TEST_CASE(DirectDynamicsRandom){
                 std::cout << "mbslib result: " << std::endl << mbslibResult.transpose().format(LongFormat) << std::endl;
                 std::cout << analyticalResult.transpose().format(LongFormat) << std::endl;
             };
-#endif
+
             analyticalResult = calculateDirectDynamics(q,dq,tau,g, l, m, r_com, I_com);
 
             mbs->setJointPosition(q);
@@ -426,19 +431,17 @@ BOOST_AUTO_TEST_CASE(DirectDynamicsRandom){
 
             mbs->doCrba();
             mbslibResult = mbs->getJointAcceleration();
-            BOOST_CHECK(result = (mbslibResult - analyticalResult).isZero(1e-6));
-#ifdef ERROR_PRINTOUT
+            TEST_CHECK_EQUAL_RESULT(mbslibResult,analyticalResult,result);
+
             if(!result)
                 printResults();
-#endif
 
             mbs->doABA();
             mbslibResult = mbs->getJointAcceleration();
-            BOOST_CHECK(result = (mbslibResult - analyticalResult).isZero(1e-6));
-#ifdef ERROR_PRINTOUT
+            TEST_CHECK_EQUAL_RESULT(mbslibResult,analyticalResult,result);
+
             if(!result)
                 printResults();
-#endif
         }
         delete mbs; mbs = nullptr;
     }
@@ -450,7 +453,6 @@ BOOST_AUTO_TEST_CASE(InverseDynamicsRandom){
     TVectorX m(2);
 
     TScalar g = -9.81;
-    //TScalar g = 0.0;//-9.81;
 
     TVector3Vector r_com;
     r_com.assign(2, TVector3::Zero());
@@ -472,13 +474,13 @@ BOOST_AUTO_TEST_CASE(InverseDynamicsRandom){
 
     RigidBodyDescription rbd1, rbd2;
 
-    const MMSTs _q              {-10.0,   10.0,   5.0}; // 25
-    const MMSTs _dq             {-10.0,   10.0,   5.0}; // 25
-    const MMSTs _ddq            {-10.0,   10.0,   5.0}; // 25
-    const MMSTs _l              {  0.1,   10.1,   2.5}; // 25
-    const MMSTs _m              {  0.1,   10.1,   2.5}; // 25
-    const MMSTs _r              { -0.0,    1.0,   0.5}; // 5^4 / 625
-    const MMSTs _I              {  0.0,    1.0,   0.25}; // 25
+    const MMSTs _q              {-10.0,   10.0,   5.0};
+    const MMSTs _dq             {-10.0,   10.0,   5.0};
+    const MMSTs _ddq            {-10.0,   10.0,   5.0};
+    const MMSTs _l              {  0.1,   10.1,   2.5};
+    const MMSTs _m              {  0.1,   10.1,   2.5};
+    const MMSTs _r              { -0.0,    1.0,   0.5};
+    const MMSTs _I              {  0.0,    1.0,   0.25};
 
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -512,7 +514,7 @@ BOOST_AUTO_TEST_CASE(InverseDynamicsRandom){
             dq(1) = _dq_dis(gen);
             ddq(0) = _ddq_dis(gen);
             ddq(1) =  _ddq_dis(gen);
-#ifdef ERROR_PRINTOUT
+
             auto printResults = [&]() {
                 std::cout << "q "
                           << q.transpose()
@@ -533,7 +535,7 @@ BOOST_AUTO_TEST_CASE(InverseDynamicsRandom){
                 std::cout << "mbslib result: " << std::endl << mbslibResult.transpose().format(LongFormat) << std::endl;
                 std::cout << analyticalResult.transpose().format(LongFormat) << std::endl;
             };
-#endif
+
             analyticalResult = calculateInverseDynamics(q,dq,ddq,g, l, m, r_com, I_com);
 
             mbs->setJointPosition(q);
@@ -542,26 +544,22 @@ BOOST_AUTO_TEST_CASE(InverseDynamicsRandom){
 
             mbs->doRne();
             mbslibResult = mbs->getJointForceTorque();
-            BOOST_CHECK(result = (mbslibResult - analyticalResult).isZero(1e-6));
-#ifdef ERROR_PRINTOUT
+            TEST_CHECK_EQUAL_RESULT(mbslibResult,analyticalResult,result);
+
             if(!result)
                 printResults();
-#endif
 
         }
         delete mbs; mbs = nullptr;
     }
 }
-#endif
 
-#ifdef FULL_TEST
 BOOST_AUTO_TEST_CASE(DirectDynamics){
     std::cout << "Test case DirectDynamics" << std::endl;
     TVectorX l(2);
     TVectorX m(2);
 
     TScalar g = -9.81;
-    //TScalar g = 0.0;//-9.81;
 
     TVector3Vector r_com;
     r_com.assign(2, TVector3::Zero());
@@ -583,25 +581,21 @@ BOOST_AUTO_TEST_CASE(DirectDynamics){
 
     RigidBodyDescription rbd1, rbd2;
 
-    const MMSTs _q              {-10.0,   10.0,   5.0}; // 25
-    const MMSTs _dq             {-10.0,   10.0,   5.0}; // 25
-    const MMSTs _tau            {-10.0,   10.0,   5.0}; // 25
-    const MMSTs _l              {  0.1,   10.1,   2.5}; // 25
-    const MMSTs _m              {  0.1,   10.1,   2.5}; // 25
-    const MMSTs _r              { -0.0,    1.0,   0.5}; // 5^4 / 625
-    const MMSTs _I              {  0.0,    1.0,   0.25}; // 25
-
-    size_t iter = 0;
+    const MMSTs _q              { -4.0,  4.0,   4.0};
+    const MMSTs _dq             { -5.0,  5.0,   5.0};
+    const MMSTs _tau            { -6.0,  6.0,   6.0};
+    const MMSTs _l              {  0.1,  5.1,   2.5};
+    const MMSTs _m              {  0.1,  5.1,   2.5};
+    const MMSTs _r              { -0.5,  0.5,   0.5};
+    const MMSTs _I              {  0.0,  1.0,   0.5};
 
     bool result;
-    //auto start = std::chrono::steady_clock::now();
-    Stopwatch<> watch;
+
     for (l(0) = _l.min; l(0) <= _l.max; l(0) += _l.step) {
     for (l(1) = _l.min; l(1) <= _l.max; l(1) += _l.step) {
         MbsCompoundWithBuilder * mbs = nullptr;
         RigidLink* link1 = nullptr;
         RigidLink* link2 = nullptr;
-        std::cout << iter << std::endl;
     for (m(0) = _m.min; m(0) <= _m.max; m(0) += _m.step) {
         rbd1.m = m(0);
     for (m(1) = _m.min; m(1) <= _m.max; m(1) += _m.step) {
@@ -625,12 +619,6 @@ BOOST_AUTO_TEST_CASE(DirectDynamics){
         } else {
             (*link1) = rbd1;
             (*link2) = rbd2;
-            /*link1->setInertiaTensor(I_com[0]);
-            link2->setInertiaTensor(I_com[1]);
-            link1->setCenterOfMass(r_com[0]);
-            link2->setCenterOfMass(r_com[1]);
-            link1->setMass(m(0));
-            link2->setMass(m(1));*/
         }
 
         for (q(0) = _q.min; q(0) <= _q.max; q(0) += _q.step) {
@@ -639,9 +627,7 @@ BOOST_AUTO_TEST_CASE(DirectDynamics){
         for (dq(1) = _dq.min; dq(1) <= _dq.max; dq(1) += _dq.step) {
         for (tau(0) = _tau.min; tau(0) <= _tau.max; tau(0) += _tau.step) {
         for (tau(1) = _tau.min; tau(1) <= _tau.max; tau(1) += _tau.step) {
-            ++iter;
 
-#ifdef ERROR_PRINTOUT
             auto printResults = [&]() {
                 std::cout << "q "
                           << q.transpose()
@@ -662,7 +648,7 @@ BOOST_AUTO_TEST_CASE(DirectDynamics){
                 std::cout << "mbslib result: " << std::endl << mbslibResult.transpose().format(LongFormat) << std::endl;
                 std::cout << analyticalResult.transpose().format(LongFormat) << std::endl;
             };
-#endif
+
             analyticalResult = calculateDirectDynamics(q,dq,tau,g, l, m, r_com, I_com);
 
             mbs->setJointPosition(q);
@@ -671,39 +657,24 @@ BOOST_AUTO_TEST_CASE(DirectDynamics){
 
             mbs->doCrba();
             mbslibResult = mbs->getJointAcceleration();
-            BOOST_CHECK(result = (mbslibResult - analyticalResult).isZero(1e-8));
-#ifdef ERROR_PRINTOUT
+            TEST_CHECK_EQUAL_RESULT(mbslibResult,analyticalResult,result);
+
             if(!result)
                 printResults();
-#endif
 
             mbs->doABA();
             mbslibResult = mbs->getJointAcceleration();
-            BOOST_CHECK(result = (mbslibResult - analyticalResult).isZero(1e-8));
-#ifdef ERROR_PRINTOUT
+            TEST_CHECK_EQUAL_RESULT(mbslibResult,analyticalResult,result);
+
             if(!result)
                 printResults();
-#endif
-        }
-        }
-        }
-        }
-        }
-        }
 
-        //delete mbs;
-//        auto curr = std::chrono::steady_clock::now();
-//        auto duration = std::chrono::duration_cast< std::chrono::seconds>
-//                                    (curr - start);
-        double duration = watch.stop() * 1e-6;
-        std::cout << iter
-                  << ", "
-                  << duration
-                  << ", "
-                  << duration/iter
-                  << ", "
-                  << iter/duration
-                  << std::endl;
+        }
+        }
+        }
+        }
+        }
+        }
     }
     }
     }
@@ -722,8 +693,7 @@ BOOST_AUTO_TEST_CASE(InverseDynamics){
     TVectorX l(2);
     TVectorX m(2);
 
-    //TScalar g = -9.81;
-    TScalar g = 0.0;
+    TScalar g = -9.81;
 
     TVector3Vector r_com;
     r_com.assign(2, TVector3::Zero());
@@ -745,13 +715,15 @@ BOOST_AUTO_TEST_CASE(InverseDynamics){
 
     RigidBodyDescription rbd1, rbd2;
 
-    const MMSTs _q              {-10.0,   10.0,   5.0};
-    const MMSTs _dq             {-10.0,   10.0,   5.0};
-    const MMSTs _ddq            {-10.0,   10.0,   5.0};
-    const MMSTs _l              {  1.0,   51.0,  10.0};
-    const MMSTs _m              {  1.0,   15.0,   2.0};
-    const MMSTs _r              {-10.0,   10.0,   5.0};
-    const MMSTs _I              {  0.0,    1.0,   0.2};
+    const MMSTs _q              { -4.0,  4.0,   4.0};
+    const MMSTs _dq             { -5.0,  5.0,   5.0};
+    const MMSTs _ddq            { -6.0,  6.0,   6.0};
+    const MMSTs _l              {  0.1,  5.1,   2.5};
+    const MMSTs _m              {  0.1,  5.1,   2.5};
+    const MMSTs _r              { -0.5,  0.5,   0.5};
+    const MMSTs _I              {  0.0,  1.0,   0.5};
+
+    bool result;
 
     for (l(0) = _l.min; l(0) <= _l.max; l(0) += _l.step) {
     for (l(1) = _l.min; l(1) <= _l.max; l(1) += _l.step) {
@@ -781,13 +753,6 @@ BOOST_AUTO_TEST_CASE(InverseDynamics){
         } else {
             (*link1) = rbd1;
             (*link2) = rbd2;
-
-            /*link1->setInertiaTensor(I_com[0]);
-            link2->setInertiaTensor(I_com[1]);
-            link1->setCenterOfMass(r_com[0]);
-            link2->setCenterOfMass(r_com[1]);
-            link1->setMass(m(0));
-            link2->setMass(m(1));*/
         }
 
         for (q(0) = _q.min; q(0) <= _q.max; q(0) += _q.step) {
@@ -796,31 +761,45 @@ BOOST_AUTO_TEST_CASE(InverseDynamics){
         for (dq(1) = _dq.min; dq(1) <= _dq.max; dq(1) += _dq.step) {
         for (ddq(0) = _ddq.min; ddq(0) <= _ddq.max; ddq(0) += _ddq.step) {
         for (ddq(1) = _ddq.min; ddq(1) <= _ddq.max; ddq(1) += _ddq.step) {
-#ifdef ERROR_PRINTOUT
+
             auto printResults = [&]() {
+                std::cout << "q "
+                          << q.transpose()
+                          << " dq "
+                          << dq.transpose()
+                          << " ddq "
+                          << ddq.transpose()
+                          << std::endl;
+                std::cout << "l "
+                          << l.transpose()
+                          << " m "
+                          << m.transpose()
+                          << " r_com[0] "
+                          << r_com[0].transpose()
+                          << " r_com[1] "
+                          << r_com[1].transpose()
+                          << std::endl;
                 std::cout << "mbslib result: " << std::endl << mbslibResult.transpose().format(LongFormat) << std::endl;
                 std::cout << analyticalResult.transpose().format(LongFormat) << std::endl;
             };
-#endif
+
             mbs->setJointPosition(q);
             mbs->setJointVelocity(dq);
             mbs->setJointAcceleration(ddq);
             mbs->doRne();
             mbslibResult = mbs->getJointForceTorque();
             analyticalResult = calculateInverseDynamics(q,dq,ddq,g, l, m, r_com, I_com);
-            BOOST_CHECK((mbslibResult - analyticalResult).isZero(1e-8));
-#ifdef ERROR_PRINTOUT
-            if(!(mbslibResult - analyticalResult).isZero(1e-8))
-                printResults();
-#endif
-        }
-        }
-        }
-        }
-        }
-        }
+            TEST_CHECK_EQUAL_RESULT(mbslibResult,analyticalResult,result);
 
-        //delete mbs;
+            if(!result)
+                printResults();
+
+        }
+        }
+        }
+        }
+        }
+        }
     }
     }
     }
@@ -835,4 +814,4 @@ BOOST_AUTO_TEST_CASE(InverseDynamics){
     }
 
 }
-#endif
+

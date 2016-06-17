@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE(BasicTest)
     Fork *fork;
     FixedTranslation *ft1, *ft2;
     Base* base;
-    //JointForceSetter *jfs1, *jfs2;
+    JointForceSetter *jfs1, *jfs2;
 
     TVector3 mbslibResult;
 
@@ -54,10 +54,13 @@ BOOST_AUTO_TEST_CASE(BasicTest)
     ft2 = mbs->addFixedTranslation(TVector3(-0.5, 0, 0.0), "link4");
     ep2 = mbs->addEndpoint("ep2");
 
-//    jfs1 = new JointForceSetter(*j1);
-//    jfs2 = new JointForceSetter(*j2);
-//    mbs->addForceGenerator(jfs1);
-//    mbs->addForceGenerator(jfs2);
+    /// Joint force setter tests
+    jfs1 = new JointForceSetter(*j1);
+    jfs2 = new JointForceSetter(*j2);
+    mbs->addForceGenerator(jfs1);
+    mbs->addForceGenerator(jfs2);
+
+    BOOST_CHECK_NE(jfs1, jfs2);
 
     /// Gravity test
     testValue.setRandom();
@@ -155,6 +158,17 @@ BOOST_AUTO_TEST_CASE(BasicTest)
         BOOST_CHECK_EQUAL(mbs->getDStateDt()(0), mbs->getState()(1));
         BOOST_CHECK_EQUAL(mbs->getDStateDt()(2), mbs->getState()(3));
 
+
+        jfs1->setControlValue(testValue(0));
+        jfs2->setControlValue(testValue(1));
+        BOOST_CHECK_EQUAL(testValue(0), jfs1->getControlValue());
+        BOOST_CHECK_EQUAL(testValue(1), jfs2->getControlValue());
+
+        BOOST_CHECK_EQUAL(testValue.segment(0,2), mbs->getControlValues());
+
+        mbs->setControlValues(testValue.segment(2,2));
+        BOOST_CHECK_EQUAL(testValue(2), jfs1->getControlValue());
+        BOOST_CHECK_EQUAL(testValue(3), jfs2->getControlValue());
     }
 
     /// Coordinate frame tests
@@ -172,18 +186,4 @@ BOOST_AUTO_TEST_CASE(BasicTest)
     BOOST_CHECK_EQUAL(TVector3(-0.5,l(0),l(1)), ft2->getCoordinateFrame().r);
     BOOST_CHECK_EQUAL(TVector3(-0.5,l(0),l(1)), ep2->getCoordinateFrame().r);
 
-
-    return;
-
-    BOOST_CHECK_EQUAL (mbs->getJointPosition()(0), 10);
-
-    mbs->setJointPosition(TVector3(20, 0, 2));
-    BOOST_CHECK_EQUAL (mbs->getJointPosition()(0), 20);
-
-    BOOST_CHECK_EQUAL (mbs->getGravitation()(0), 0);
-
-    mbs->setGravitation(TVector3(0, 9.81, 0));
-    BOOST_CHECK_EQUAL (mbs->getGravitation()(1), 9.81);
-
-    BOOST_CHECK_EQUAL (mbs->getJointAcceleration()(0), 0);
 }

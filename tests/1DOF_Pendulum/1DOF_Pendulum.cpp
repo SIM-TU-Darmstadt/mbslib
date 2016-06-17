@@ -9,6 +9,11 @@
 
 using namespace mbslib;
 
+#define TOLERANCE 1e-9
+
+#define TEST_CHECK_EQUAL(A,B) MBS_TEST_CHECK_EQUAL(A,B,TOLERANCE)
+#define TEST_CHECK_EQUAL_RESULT(A,B,RESULT) MBS_TEST_CHECK_EQUAL_RESULT(A,B,RESULT,TOLERANCE)
+
 
 /**
  * \brief Calculate direct kinematics
@@ -105,8 +110,7 @@ BOOST_AUTO_TEST_CASE(DirectKinematics) {
             mbslibResult = endPoint->getCoordinateFrame().r;
             analyticalResult = calculateDirectKinematics(pendulumLength, q);
 
-            BOOST_CHECK((mbslibResult - analyticalResult).isZero());
-
+            TEST_CHECK_EQUAL(mbslibResult,analyticalResult);
         }
         delete mbs;
     }
@@ -158,7 +162,7 @@ BOOST_AUTO_TEST_CASE(DirectDynamics) {
 
             mbslibResult = mbs->getJointAcceleration();
             analyticalResult = calculateDirectDynamics(pendulumLength, q, tau, gravity, pendulumMass);
-            BOOST_CHECK((mbslibResult - analyticalResult).isZero());
+            TEST_CHECK_EQUAL(mbslibResult,analyticalResult);
         }
         }
 
@@ -166,10 +170,6 @@ BOOST_AUTO_TEST_CASE(DirectDynamics) {
     }
     }
     }
-
-    //Eigen::IOFormat LongFormat(20);
-    //std::cout << "mbslib result: " << std::endl << mbslibResult.format(LongFormat) << std::endl;
-    //std::cout << analyticalResult.format(LongFormat) << std::endl;
 }
 
 BOOST_AUTO_TEST_CASE(DirectDynamicsJointForceSetter) {
@@ -215,22 +215,18 @@ BOOST_AUTO_TEST_CASE(DirectDynamicsJointForceSetter) {
             mbs->doABA();
 
             mbslibResult = mbs->getJointAcceleration();
-            BOOST_CHECK((mbslibResult - analyticalResult).isZero());
+            TEST_CHECK_EQUAL(mbslibResult,analyticalResult);
 
             mbs->doCrba();
 
             mbslibResult = mbs->getJointAcceleration();
-            BOOST_CHECK((mbslibResult - analyticalResult).isZero());
+            TEST_CHECK_EQUAL(mbslibResult,analyticalResult);
         }
         }
         delete mbs;
     }
     }
     }
-
-    //Eigen::IOFormat LongFormat(20);
-    //std::cout << "mbslib result: " << std::endl << mbslibResult.format(LongFormat) << std::endl;
-    //std::cout << analyticalResult.format(LongFormat) << std::endl;
 }
 
 BOOST_AUTO_TEST_CASE(InverseDynamics) {
@@ -275,11 +271,7 @@ BOOST_AUTO_TEST_CASE(InverseDynamics) {
             TScalar mbslibResult = joint1->getJointForceTorque();
             TScalar analyticalResult = calculateInverseDynamics(pendulumLength, q, ddq, gravity, pendulumMass);
 
-            //std::cout << "mbslib result: " << std::endl << mbslibResult << std::endl;
-            //std::cout << "inverse result: " << analyticalResult << std::endl;
-
-            BOOST_CHECK(std::fabs(mbslibResult - analyticalResult) < 1e-12);
-            //BOOST_CHECK((mbslibResult-analyticalResult).isZero());
+            BOOST_CHECK(std::fabs(mbslibResult - analyticalResult) < TOLERANCE);
         }
         }
         delete mbs;

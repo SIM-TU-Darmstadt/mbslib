@@ -11,6 +11,11 @@
 #include <cmath>
 #include <mbslib/utility/internalTests.hpp>
 
+#define TOLERANCE 1e-9
+
+#define TEST_CHECK_EQUAL(A,B) MBS_TEST_CHECK_EQUAL(A,B,TOLERANCE)
+#define TEST_CHECK_EQUAL_RESULT(A,B,RESULT) MBS_TEST_CHECK_EQUAL_RESULT(A,B,RESULT,TOLERANCE)
+
 using namespace mbslib;
 
 /**
@@ -194,8 +199,8 @@ BOOST_AUTO_TEST_CASE(DirectKinematics) {
 
             analyticalResult = calculateDirectKinematics(q,pendulumLength);
 
-            BOOST_CHECK((mbslibResult[0] - analyticalResult[0]).isZero());
-            BOOST_CHECK((mbslibResult[1] - analyticalResult[1]).isZero());
+            TEST_CHECK_EQUAL(mbslibResult[0],analyticalResult[0]);
+            TEST_CHECK_EQUAL(mbslibResult[1],analyticalResult[1]);
 
         }
         }
@@ -265,20 +270,13 @@ BOOST_AUTO_TEST_CASE(DirectDynamics){
         for (dq(1) = _dq.min; dq(1) <= _dq.max; dq(1) += _dq.step) {
         for (tau(0) = _tau.min; tau(0) <= _tau.max; tau(0) += _tau.step) {
         for (tau(1) = _tau.min; tau(1) <= _tau.max; tau(1) += _tau.step) {
-#ifdef ERROR_PRINTOUT
-            auto printResults = [&]() {
-                std::cout << "mbslib result: " << std::endl << mbslibResult.transpose().format(LongFormat) << std::endl;
-                std::cout << analyticalResult.transpose().format(LongFormat) << std::endl;
-            };
-#endif
             mbs->setJointPosition(q);
             mbs->setJointVelocity(dq);
             mbs->setJointForceTorque(tau);
             mbs->doCrba();
             mbslibResult = mbs->getJointAcceleration();
             analyticalResult = calculateDirectDynamics(q,dq,tau,pendulumLength,pendulumMass,gravity,k,d);
-            BOOST_CHECK((mbslibResult - analyticalResult).isZero(1e-10));
-            //printResults();
+            TEST_CHECK_EQUAL(mbslibResult,analyticalResult);
         }
         }
         }
@@ -290,7 +288,6 @@ BOOST_AUTO_TEST_CASE(DirectDynamics){
     }
     }
     }
-
 }
 
 BOOST_AUTO_TEST_CASE(DirectDynamicsWithDrive){
@@ -329,12 +326,6 @@ BOOST_AUTO_TEST_CASE(DirectDynamicsWithDrive){
         for (q(1) = _q.min; q(1) <= _q.max; q(1) += _q.step) {
         for (dq(0) = _dq.min; dq(0) <= _dq.max; dq(0) += _dq.step) {
         for (dq(1) = _dq.min; dq(1) <= _dq.max; dq(1) += _dq.step) {
-#ifdef ERROR_PRINTOUT
-            auto printResults = [&]() {
-                std::cout << "mbslib result: " << std::endl << mbslibResult.transpose().format(LongFormat) << std::endl;
-                std::cout << analyticalResult.transpose().format(LongFormat) << std::endl;
-            };
-#endif
             analyticalResult = calculateDirectDynamics(q,dq,tau,pendulumLength,pendulumMass,gravity,k,d);
 
             mbs->setJointPosition(q);
@@ -351,8 +342,7 @@ BOOST_AUTO_TEST_CASE(DirectDynamicsWithDrive){
             mbs->doForwardDrives();
             mbs->doABA();
             mbslibResult = mbs->getJointAcceleration();
-            BOOST_CHECK((mbslibResult - analyticalResult).isZero(1e-10));
-            //printResults();
+            TEST_CHECK_EQUAL(mbslibResult,analyticalResult);
         }
         }
         }
@@ -403,20 +393,13 @@ BOOST_AUTO_TEST_CASE(InverseDynamics){
         for (dq(1) = _dq.min; dq(1) <= _dq.max; dq(1) += _dq.step) {
         for (ddq(0) = _ddq.min; ddq(0) <= _ddq.max; ddq(0) += _ddq.step) {
         for (ddq(1) = _ddq.min; ddq(1) <= _ddq.max; ddq(1) += _ddq.step) {
-#ifdef ERROR_PRINTOUT
-            auto printResults = [&]() {
-                std::cout << "mbslib result: " << std::endl << mbslibResult.transpose().format(LongFormat) << std::endl;
-                std::cout << analyticalResult.transpose().format(LongFormat) << std::endl;
-            };
-#endif
             mbs->setJointPosition(q);
             mbs->setJointVelocity(dq);
             mbs->setJointAcceleration(ddq);
             mbs->doRne();
             mbslibResult = mbs->getJointForceTorque();
             analyticalResult = calculateInverseDynamics(q,dq,ddq,pendulumLength,pendulumMass,gravity,k,d);
-            BOOST_CHECK((mbslibResult - analyticalResult).isZero(1e-10));
-            //printResults();
+            TEST_CHECK_EQUAL(mbslibResult,analyticalResult);
         }
         }
         }

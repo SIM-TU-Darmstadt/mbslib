@@ -91,6 +91,23 @@ struct MinMaxStep {
 
 typedef MinMaxStep<TScalar> MMSTs;
 
+#define MBS_TEST_CHECK_EQUAL(A,B,TOLERANCE)\
+{\
+    TVectorX factors = A.cwiseAbs().cwiseMax(B.cwiseAbs()).cwiseMax(1.0);\
+    BOOST_CHECK((A - B).cwiseQuotient(factors).isZero(TOLERANCE));\
+}
+#define MBS_TEST_CHECK_EQUAL_RESULT(A,B,RESULT,TOLERANCE)\
+{\
+    TVectorX factors = A.cwiseAbs().cwiseMax(B.cwiseAbs()).cwiseMax(1.0);\
+    BOOST_CHECK(RESULT = (A - B).cwiseQuotient(factors).isZero(TOLERANCE));\
+}
+template<typename T>
+bool test_check_equal(const T& A, const T& B, const double tolerance=1e-10) {
+    TVectorX factors = A.cwiseAbs().cwiseMax(B.cwiseAbs()).cwiseMax(1.0);
+    bool result = false;
+    BOOST_CHECK(result = (A - B).cwiseQuotient(factors).isZero(tolerance));
+    return result;
+}
 } //namespace mbslib
 
 /**

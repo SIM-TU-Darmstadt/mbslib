@@ -8,10 +8,10 @@
 #include <mbslib/elements/spring/model/LinearSpringModel.hpp>
 #include <mbslib/utility/internalTests.hpp>
 
-//#define ERROR_PRINTOUT
+#define TOLERANCE 1e-9
 
-//#define BOOST_AUTO_TEST_CASE_MT(TESTCASE) \
-//
+#define TEST_CHECK_EQUAL(A,B) MBS_TEST_CHECK_EQUAL(A,B,TOLERANCE)
+#define TEST_CHECK_EQUAL_RESULT(A,B,RESULT) MBS_TEST_CHECK_EQUAL_RESULT(A,B,RESULT,TOLERANCE)
 
 using namespace mbslib;
 
@@ -106,7 +106,7 @@ BOOST_AUTO_TEST_CASE(DirectKinematics) {
     }
     delete mbs;
 }
-//#define ERROR_PRINTOUT
+
 BOOST_AUTO_TEST_CASE(DirectDynamics) {
     TVectorX mbslibResult(1);
     TVectorX analyticalResult(1);
@@ -137,7 +137,7 @@ BOOST_AUTO_TEST_CASE(DirectDynamics) {
         for (TScalar tau = _tau.min; tau <= _tau.max; tau += _tau.step) {
         for (q(0) = _q_counter.min; q(0) <= _q_counter.max; q(0) += _q_counter.step) {
         for (dq(0) = _dq_counter.min; dq(0) <= _dq_counter.max; dq(0) += _dq_counter.step) {
-#ifdef ERROR_PRINTOUT
+
             auto printData = [&]() {
                 std::cout << "=================================" << std::endl;
                 std::cout << "k " << springConstant << " d " << damperConstant << std::endl;
@@ -148,7 +148,7 @@ BOOST_AUTO_TEST_CASE(DirectDynamics) {
                 std::cout << "mbslib result: " << std::endl << mbslibResult.format(LongFormat) << std::endl;
                 std::cout << analyticalResult.format(LongFormat) << std::endl;
             };
-#endif
+
             analyticalResult = calculateDirectDynamics(q, dq, tau, gravity, pendulumMass, springConstant, damperConstant);
 
             mbs->setJointPosition(q);
@@ -158,32 +158,27 @@ BOOST_AUTO_TEST_CASE(DirectDynamics) {
             mbs->doABA();
 
             mbslibResult = mbs->getJointAcceleration();
-            //TVectorX q, TVectorX dq, TScalar tau, TScalar g, TScalar m, TScalar k, TScalar d
-            //BOOST_CHECK((mbslibResult - analyticalResult).isZero());
-            BOOST_CHECK(std::fabs(mbslibResult(0) - analyticalResult(0)) < 1e-10);
 
-#ifdef ERROR_PRINTOUT
-            bool error = std::fabs(mbslibResult(0) - analyticalResult(0)) > 1e-10;
-            if(error) {
+            bool result;
+            TEST_CHECK_EQUAL_RESULT(mbslibResult,analyticalResult,result);
+
+
+            if(!result) {
                 printData();
                 printResults();
             }
-#endif
+
 
             mbs->doCrba();
 
             mbslibResult = mbs->getJointAcceleration();
-            BOOST_CHECK(std::fabs(mbslibResult(0) - analyticalResult(0)) < 1e-10);
-            //BOOST_CHECK((mbslibResult - analyticalResult).isZero());
-    #ifdef ERROR_PRINTOUT
-            bool error2 = std::fabs(mbslibResult(0) - analyticalResult(0)) > 1e-10;
-            if(! error && error2) {
+            TEST_CHECK_EQUAL_RESULT(mbslibResult,analyticalResult,result);
+
+            if(!result) {
                 printData();
-            }
-            if(error || error2) {
                 printResults();
             }
-    #endif
+
         }
         }
         }
@@ -192,11 +187,6 @@ BOOST_AUTO_TEST_CASE(DirectDynamics) {
     }
     }
     }
-
-    //Eigen::IOFormat LongFormat(20);
-    //std::cout << "mbslib result: " << std::endl << mbslibResult.format(LongFormat) << std::endl;
-    //std::cout << analyticalResult.format(LongFormat) << std::endl;
-
 }
 
 BOOST_AUTO_TEST_CASE(InverseDynamics) {
@@ -232,18 +222,18 @@ BOOST_AUTO_TEST_CASE(InverseDynamics) {
         for (ddq(0) = _ddq.min; ddq(0) <= _ddq.max; ddq(0) += _ddq.step) {
         for (q(0) = _q_counter.min; q(0) <= _q_counter.max; q(0) += _q_counter.step) {
         for (dq(0) = _dq_counter.min; dq(0) <= _dq_counter.max; dq(0) += _dq_counter.step) {
-#ifdef ERROR_PRINTOUT
+
             auto printData = [&]() {
                 std::cout << "=================================" << std::endl;
                 std::cout << "k " << springConstant << " d " << damperConstant << std::endl;
-                std::cout << "q " << q_counter << " dq " << dq_counter << " ddq " << ddq << std::endl;
+                std::cout << "q " << q << " dq " << dq << " ddq " << ddq << std::endl;
                 std::cout << "m " << pendulumMass << " g " << gravity << std::endl;
             };
             auto printResults = [&]() {
                 std::cout << "mbslib result: " << std::endl << mbslibResult << std::endl;
                 std::cout << analyticalResult << std::endl;
             };
-#endif
+
 
             mbs->setJointPosition(q);
             mbs->setJointVelocity(dq);
@@ -253,15 +243,15 @@ BOOST_AUTO_TEST_CASE(InverseDynamics) {
 
             mbslibResult = joint1->getJointForceTorque();
             analyticalResult = calculateInverseDynamics(q, dq, ddq, gravity, pendulumMass, springConstant, damperConstant);
+            bool result;
 
-            BOOST_CHECK(std::fabs(mbslibResult - analyticalResult) < 1e-10);
-#ifdef ERROR_PRINTOUT
-            bool error = std::fabs(mbslibResult - analyticalResult) > 1e-10;
-            if(error) {
+            result = std::fabs(mbslibResult-analyticalResult) < TOLERANCE;
+
+            if(!result) {
                 printData();
                 printResults();
             }
-#endif
+
         }
         }
         }
