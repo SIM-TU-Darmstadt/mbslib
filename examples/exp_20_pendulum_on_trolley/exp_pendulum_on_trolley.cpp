@@ -2,10 +2,10 @@ extern "C" {
 #include <motionEquation.h>
 }
 #include <Eigen/Core>
-#include <iostream>
-#include <fstream>
-#include <math.h>
 #include <cmath>
+#include <fstream>
+#include <iostream>
+#include <math.h>
 #include <vector>
 
 #include <boost/numeric/odeint.hpp>
@@ -66,7 +66,7 @@ int main(int argc, char ** argv) {
     //typedef boost::numeric::odeint::controlled_runge_kutta< error_stepper_type > controlled_stepper_type;
     //controlled_stepper_type controlled_stepper;
 
-    std::function< void(const state_type &, state_type &, double)> fnk = [&](const state_type & xx, state_type & dxdt, double t) {
+    std::function< void(const state_type &, state_type &, double) > fnk = [&](const state_type & xx, state_type & dxdt, double t) {
 #if EIGEN_WORLD_VERSION >= 3
         x_ = Eigen::Map< const Eigen::VectorXd >(xx.data(), xx.size());
 #else

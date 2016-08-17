@@ -37,8 +37,8 @@
 #include <mbslib/elements/endpoint/Endpoint.hpp>
 #include <mbslib/elements/joint/Joint.hpp>
 
-#include <mbslib/elements/drive/Drive.hpp>
 #include <mbslib/elements/drive/ActiveDrive.hpp>
+#include <mbslib/elements/drive/Drive.hpp>
 
 #include <mbslib/elements/force/ForceGeneratorSet.hpp>
 

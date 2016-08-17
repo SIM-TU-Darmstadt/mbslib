@@ -24,18 +24,18 @@
  * \file src/example/exp_01.cpp
  * 
  */
-#include <mbslib/mbslib.hpp>
 #include <mbslib/elements/base/FixedBase.hpp>
+#include <mbslib/elements/endpoint/Endpoint.hpp>
 #include <mbslib/elements/joint/PrismaticJoint.hpp>
 #include <mbslib/elements/joint/RevoluteJoint.hpp>
 #include <mbslib/elements/rigidbody/RigidLink.hpp>
-#include <mbslib/elements/endpoint/Endpoint.hpp>
+#include <mbslib/mbslib.hpp>
 
 #include <mbslib/elements/compound/MbsCompoundWithBuilder.hpp>
 
-#include <iostream>
 #include <Eigen/Core>
 #include <Eigen/Dense>
+#include <iostream>
 
 void test1() {
     using namespace mbslib;

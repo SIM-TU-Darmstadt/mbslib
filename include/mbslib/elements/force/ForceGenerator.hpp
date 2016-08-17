@@ -28,8 +28,8 @@
 #ifndef __MBSLIB_FORCEGENERATER_HPP__
 #define __MBSLIB_FORCEGENERATER_HPP__
 
-#include <mbslib/elements/IIntegrate.hpp>
 #include <mbslib/MbslibBaseClass.hpp>
+#include <mbslib/elements/IIntegrate.hpp>
 
 #include <string>
 

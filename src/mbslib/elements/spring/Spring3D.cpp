@@ -69,14 +69,14 @@ public:
         direction = end2.getCoordinateFrame().r - end1.getCoordinateFrame().r;
         length = direction.norm();
         vRel = end2.getCoordinateFrame().R * end2.getCoordinateFrame().v - end1.getCoordinateFrame().R * end1.getCoordinateFrame().v;
-        if(length != 0.0) {
-            direction *= (1/length);
+        if (length != 0.0) {
+            direction *= (1 / length);
             dLength = vRel.dot(direction);
         } else {
             direction = vRel;
             dLength = direction.norm();
-            if(dLength != 0) {
-                direction *= (1/dLength);
+            if (dLength != 0) {
+                direction *= (1 / dLength);
             }
         }
     }
@@ -209,6 +209,8 @@ std::vector< Endpoint * > & Spring3D::getPoints() {
 }
 
 Spring3D::~Spring3D() {
-    for(auto i : segments) {delete i;}
+    for (auto i : segments) {
+        delete i;
+    }
 }
 } //namespace mbslib

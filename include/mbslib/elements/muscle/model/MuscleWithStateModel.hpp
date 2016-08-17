@@ -21,14 +21,14 @@
  * along with MBSlib.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <mbslib/elements/muscle/MuscleModel.hpp>
 #include <mbslib/elements/muscle/Muscle.hpp>
+#include <mbslib/elements/muscle/MuscleModel.hpp>
 
-#include <iostream>
-#include <fstream>
-#include <math.h>
-#include <iomanip>
 #include <Eigen/Geometry>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <math.h>
 
 #ifndef __MUSCLE_WITH_STATE_MODEL_HPP__
 #define __MUSCLE_WITH_STATE_MODEL_HPP__

@@ -21,10 +21,10 @@
  * along with MBSlib.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <fstream>
+#include <iostream>
 #include <mbslib/elements/compound/MbsCompoundWithBuilder.hpp>
 #include <mbslib/elements/joint/JointForceSetter.hpp>
-#include <iostream>
-#include <fstream>
 #include <stdio.h>
 
 using namespace mbslib;

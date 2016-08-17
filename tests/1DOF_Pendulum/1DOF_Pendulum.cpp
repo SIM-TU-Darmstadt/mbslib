@@ -2,18 +2,17 @@
 #include <boost/test/included/unit_test.hpp>
 
 #include <iostream>
-#include <stdio.h>
 #include <mbslib/elements/compound/MbsCompoundWithBuilder.hpp>
 #include <mbslib/elements/joint/JointForceSetter.hpp>
 #include <mbslib/utility/internalTests.hpp>
+#include <stdio.h>
 
 using namespace mbslib;
 
 #define TOLERANCE 1e-9
 
-#define TEST_CHECK_EQUAL(A,B) MBS_TEST_CHECK_EQUAL(A,B,TOLERANCE)
-#define TEST_CHECK_EQUAL_RESULT(A,B,RESULT) MBS_TEST_CHECK_EQUAL_RESULT(A,B,RESULT,TOLERANCE)
-
+#define TEST_CHECK_EQUAL(A, B) MBS_TEST_CHECK_EQUAL(A, B, TOLERANCE)
+#define TEST_CHECK_EQUAL_RESULT(A, B, RESULT) MBS_TEST_CHECK_EQUAL_RESULT(A, B, RESULT, TOLERANCE)
 
 /**
  * \brief Calculate direct kinematics
@@ -94,8 +93,8 @@ BOOST_AUTO_TEST_CASE(DirectKinematics) {
     Endpoint * endPoint;
     MbsCompoundWithBuilder * mbs;
 
-    const MMSTs _q_counter      {  0.0,  500.0,  10.0};
-    const MMSTs _l_counter      {  0.0,   50.0,   1.0};
+    const MMSTs _q_counter{0.0, 500.0, 10.0};
+    const MMSTs _l_counter{0.0, 50.0, 1.0};
 
     for (TScalar l_counter = _l_counter.min; l_counter <= _l_counter.max; l_counter += _l_counter.step) {
         pendulumLength = l_counter / 10.0;
@@ -110,7 +109,7 @@ BOOST_AUTO_TEST_CASE(DirectKinematics) {
             mbslibResult = endPoint->getCoordinateFrame().r;
             analyticalResult = calculateDirectKinematics(pendulumLength, q);
 
-            TEST_CHECK_EQUAL(mbslibResult,analyticalResult);
+            TEST_CHECK_EQUAL(mbslibResult, analyticalResult);
         }
         delete mbs;
     }
@@ -128,47 +127,47 @@ BOOST_AUTO_TEST_CASE(DirectDynamics) {
     std::cout << std::setprecision(40);
 
     // min, max, step
-    const MMSTs _tau            {-10.0,   10.0,   5.0};
-    const MMSTs _gravity        {-10.0,   10.0,   5.0};
-    const MMSTs _pendulumMass   {  5.0,   30.0,   5.0};
-    const MMSTs _q_counter      {  0.0,  500.0,  25.0};
-    const MMSTs _l_counter      {  1.0,   51.0,   2.5};
+    const MMSTs _tau{-10.0, 10.0, 5.0};
+    const MMSTs _gravity{-10.0, 10.0, 5.0};
+    const MMSTs _pendulumMass{5.0, 30.0, 5.0};
+    const MMSTs _q_counter{0.0, 500.0, 25.0};
+    const MMSTs _l_counter{1.0, 51.0, 2.5};
 
     for (TScalar pendulumMass = _pendulumMass.min; pendulumMass <= _pendulumMass.max; pendulumMass += _pendulumMass.step) {
-    for (TScalar gravity = _gravity.min; gravity <= _gravity.max; gravity += _gravity.step) {
-    for (TScalar l_counter = _l_counter.min; l_counter <= _l_counter.max; l_counter += _l_counter.step) {
-        pendulumLength = l_counter / 10.0;
-        MbsCompoundWithBuilder * mbs;
-        TMatrix3x3 pendulumInertia = TMatrix3x3::Zero(); // inertia of arm
-        pendulumInertia(0, 0) = pendulumInertia(2, 2) = pendulumMass * pendulumLength * pendulumLength / 12;
+        for (TScalar gravity = _gravity.min; gravity <= _gravity.max; gravity += _gravity.step) {
+            for (TScalar l_counter = _l_counter.min; l_counter <= _l_counter.max; l_counter += _l_counter.step) {
+                pendulumLength = l_counter / 10.0;
+                MbsCompoundWithBuilder * mbs;
+                TMatrix3x3 pendulumInertia = TMatrix3x3::Zero(); // inertia of arm
+                pendulumInertia(0, 0) = pendulumInertia(2, 2) = pendulumMass * pendulumLength * pendulumLength / 12;
 
-        mbs = buildDynamicsModel(pendulumLength, TVector3(0.0, -gravity, 0.0), pendulumMass, TVector3::UnitY() * pendulumLength / 2, pendulumInertia);
+                mbs = buildDynamicsModel(pendulumLength, TVector3(0.0, -gravity, 0.0), pendulumMass, TVector3::UnitY() * pendulumLength / 2, pendulumInertia);
 
-        for (TScalar tau = _tau.min; tau <= _tau.max; tau += _tau.step) {
-        for (TScalar q_counter = _q_counter.min; q_counter <= _q_counter.max; q_counter += _q_counter.step) {
-            q << q_counter / 180.0 * M_PI;
-            Joint1DOF * joint1 = mbs->getJointByName("q");
+                for (TScalar tau = _tau.min; tau <= _tau.max; tau += _tau.step) {
+                    for (TScalar q_counter = _q_counter.min; q_counter <= _q_counter.max; q_counter += _q_counter.step) {
+                        q << q_counter / 180.0 * M_PI;
+                        Joint1DOF * joint1 = mbs->getJointByName("q");
 
-            mbs->setJointPosition(q);
-            joint1->setJointForceTorque(tau);
+                        mbs->setJointPosition(q);
+                        joint1->setJointForceTorque(tau);
 
-            mbs->doABA();
+                        mbs->doABA();
 
-            mbslibResult = mbs->getJointAcceleration();
-            analyticalResult = calculateDirectDynamics(pendulumLength, q, tau, gravity, pendulumMass);
-            BOOST_CHECK((mbslibResult - analyticalResult).isZero());
+                        mbslibResult = mbs->getJointAcceleration();
+                        analyticalResult = calculateDirectDynamics(pendulumLength, q, tau, gravity, pendulumMass);
+                        BOOST_CHECK((mbslibResult - analyticalResult).isZero());
 
-            mbs->doCrba();
+                        mbs->doCrba();
 
-            mbslibResult = mbs->getJointAcceleration();
-            analyticalResult = calculateDirectDynamics(pendulumLength, q, tau, gravity, pendulumMass);
-            TEST_CHECK_EQUAL(mbslibResult,analyticalResult);
+                        mbslibResult = mbs->getJointAcceleration();
+                        analyticalResult = calculateDirectDynamics(pendulumLength, q, tau, gravity, pendulumMass);
+                        TEST_CHECK_EQUAL(mbslibResult, analyticalResult);
+                    }
+                }
+
+                delete mbs;
+            }
         }
-        }
-
-        delete mbs;
-    }
-    }
     }
 }
 
@@ -184,48 +183,48 @@ BOOST_AUTO_TEST_CASE(DirectDynamicsJointForceSetter) {
     std::cout << std::setprecision(40);
 
     // min, max, step
-    const MMSTs _tau            {-10.0,   10.0,  5.0};
-    const MMSTs _gravity        {-10.0,   10.0,  5.0};
-    const MMSTs _pendulumMass   {  5.0,   30.0,   5.0};
-    const MMSTs _q_counter      {  0.0,  500.0,  25.0};
-    const MMSTs _l_counter      {  1.0,   51.0,   2.5};
+    const MMSTs _tau{-10.0, 10.0, 5.0};
+    const MMSTs _gravity{-10.0, 10.0, 5.0};
+    const MMSTs _pendulumMass{5.0, 30.0, 5.0};
+    const MMSTs _q_counter{0.0, 500.0, 25.0};
+    const MMSTs _l_counter{1.0, 51.0, 2.5};
 
     for (TScalar pendulumMass = _pendulumMass.min; pendulumMass <= _pendulumMass.max; pendulumMass += _pendulumMass.step) {
-    for (TScalar gravity = _gravity.min; gravity <= _gravity.max; gravity += _gravity.step) {
-    for (TScalar l_counter = _l_counter.min; l_counter <= _l_counter.max; l_counter += _l_counter.step) {
-        pendulumLength = l_counter / 10.0;
+        for (TScalar gravity = _gravity.min; gravity <= _gravity.max; gravity += _gravity.step) {
+            for (TScalar l_counter = _l_counter.min; l_counter <= _l_counter.max; l_counter += _l_counter.step) {
+                pendulumLength = l_counter / 10.0;
 
-        MbsCompoundWithBuilder * mbs;
-        TMatrix3x3 pendulumInertia = TMatrix3x3::Zero(); // inertia of arm
-        pendulumInertia(0, 0) = pendulumInertia(2, 2) = pendulumMass * pendulumLength * pendulumLength / 12;
-        mbs = buildDynamicsModel(pendulumLength, TVector3(0.0, -gravity, 0.0), pendulumMass, TVector3::UnitY() * pendulumLength / 2, pendulumInertia);
-        Joint1DOF * joint1 = mbs->getJointByName("q");
-        JointForceSetter * jfs1 = new JointForceSetter(*joint1);
-        mbs->addForceGenerator(jfs1);
+                MbsCompoundWithBuilder * mbs;
+                TMatrix3x3 pendulumInertia = TMatrix3x3::Zero(); // inertia of arm
+                pendulumInertia(0, 0) = pendulumInertia(2, 2) = pendulumMass * pendulumLength * pendulumLength / 12;
+                mbs = buildDynamicsModel(pendulumLength, TVector3(0.0, -gravity, 0.0), pendulumMass, TVector3::UnitY() * pendulumLength / 2, pendulumInertia);
+                Joint1DOF * joint1 = mbs->getJointByName("q");
+                JointForceSetter * jfs1 = new JointForceSetter(*joint1);
+                mbs->addForceGenerator(jfs1);
 
-        for (TScalar tau = _tau.min; tau <= _tau.max; tau += _tau.step) {
-        for (TScalar q_counter = _q_counter.min; q_counter <= _q_counter.max; q_counter += _q_counter.step) {
-            q << q_counter / 180.0 * M_PI;
-            analyticalResult = calculateDirectDynamics(pendulumLength, q, tau, gravity, pendulumMass);
+                for (TScalar tau = _tau.min; tau <= _tau.max; tau += _tau.step) {
+                    for (TScalar q_counter = _q_counter.min; q_counter <= _q_counter.max; q_counter += _q_counter.step) {
+                        q << q_counter / 180.0 * M_PI;
+                        analyticalResult = calculateDirectDynamics(pendulumLength, q, tau, gravity, pendulumMass);
 
-            mbs->setJointPosition(q);
+                        mbs->setJointPosition(q);
 
-            jfs1->setControlValue(tau);
+                        jfs1->setControlValue(tau);
 
-            mbs->doABA();
+                        mbs->doABA();
 
-            mbslibResult = mbs->getJointAcceleration();
-            TEST_CHECK_EQUAL(mbslibResult,analyticalResult);
+                        mbslibResult = mbs->getJointAcceleration();
+                        TEST_CHECK_EQUAL(mbslibResult, analyticalResult);
 
-            mbs->doCrba();
+                        mbs->doCrba();
 
-            mbslibResult = mbs->getJointAcceleration();
-            TEST_CHECK_EQUAL(mbslibResult,analyticalResult);
+                        mbslibResult = mbs->getJointAcceleration();
+                        TEST_CHECK_EQUAL(mbslibResult, analyticalResult);
+                    }
+                }
+                delete mbs;
+            }
         }
-        }
-        delete mbs;
-    }
-    }
     }
 }
 
@@ -239,43 +238,42 @@ BOOST_AUTO_TEST_CASE(InverseDynamics) {
     std::cout << std::setprecision(40);
 
     // min, max, step
-    const MMSTs _ddq            {-10.0,   10.0,   5.0};
-    const MMSTs _gravity        {-10.0,   10.0,   5.0};
-    const MMSTs _pendulumMass   {  5.0,   30.0,   5.0};
-    const MMSTs _q_counter      {  0.0,  500.0,  25.0};
-    const MMSTs _l_counter      {  1.0,   51.0,   2.5};
+    const MMSTs _ddq{-10.0, 10.0, 5.0};
+    const MMSTs _gravity{-10.0, 10.0, 5.0};
+    const MMSTs _pendulumMass{5.0, 30.0, 5.0};
+    const MMSTs _q_counter{0.0, 500.0, 25.0};
+    const MMSTs _l_counter{1.0, 51.0, 2.5};
 
     for (TScalar gravity = _gravity.min; gravity <= _gravity.max; gravity += _gravity.step) {
-    for (TScalar pendulumMass = _pendulumMass.min; pendulumMass <= _pendulumMass.max; pendulumMass += _pendulumMass.step) {
-    for (TScalar l_counter = _l_counter.min; l_counter <= _l_counter.max; l_counter += _l_counter.step) {
-        pendulumLength = l_counter / 10.0;
-        MbsCompoundWithBuilder * mbs;
-        TMatrix3x3 pendulumInertia = TMatrix3x3::Zero();           // inertia of arm
-        TVector3 pendulumCOM = TVector3::UnitY() * pendulumLength / 2; // centor of pendulumMass of arm
-        pendulumInertia(0, 0) = pendulumInertia(2, 2) = pendulumMass * pendulumLength * pendulumLength / 12;
+        for (TScalar pendulumMass = _pendulumMass.min; pendulumMass <= _pendulumMass.max; pendulumMass += _pendulumMass.step) {
+            for (TScalar l_counter = _l_counter.min; l_counter <= _l_counter.max; l_counter += _l_counter.step) {
+                pendulumLength = l_counter / 10.0;
+                MbsCompoundWithBuilder * mbs;
+                TMatrix3x3 pendulumInertia = TMatrix3x3::Zero();               // inertia of arm
+                TVector3 pendulumCOM = TVector3::UnitY() * pendulumLength / 2; // centor of pendulumMass of arm
+                pendulumInertia(0, 0) = pendulumInertia(2, 2) = pendulumMass * pendulumLength * pendulumLength / 12;
 
-        mbs = buildDynamicsModel(pendulumLength, TVector3(0.0, -gravity, 0.0), pendulumMass, pendulumCOM, pendulumInertia);
+                mbs = buildDynamicsModel(pendulumLength, TVector3(0.0, -gravity, 0.0), pendulumMass, pendulumCOM, pendulumInertia);
 
-        Joint1DOF * joint1 = mbs->getJointByName("q");
+                Joint1DOF * joint1 = mbs->getJointByName("q");
 
-        for (ddq << _ddq.min; ddq(0) <= _ddq.max; ddq(0) += _ddq.step) {
-        for (TScalar q_counter = _q_counter.min; q_counter <= _q_counter.max; q_counter += _q_counter.step) {
-            q << q_counter / 180.0 * M_PI;
+                for (ddq << _ddq.min; ddq(0) <= _ddq.max; ddq(0) += _ddq.step) {
+                    for (TScalar q_counter = _q_counter.min; q_counter <= _q_counter.max; q_counter += _q_counter.step) {
+                        q << q_counter / 180.0 * M_PI;
 
+                        mbs->setJointPosition(q);
+                        mbs->setJointAcceleration(ddq);
 
-            mbs->setJointPosition(q);
-            mbs->setJointAcceleration(ddq);
+                        mbs->doRne();
 
-            mbs->doRne();
+                        TScalar mbslibResult = joint1->getJointForceTorque();
+                        TScalar analyticalResult = calculateInverseDynamics(pendulumLength, q, ddq, gravity, pendulumMass);
 
-            TScalar mbslibResult = joint1->getJointForceTorque();
-            TScalar analyticalResult = calculateInverseDynamics(pendulumLength, q, ddq, gravity, pendulumMass);
-
-            BOOST_CHECK(std::fabs(mbslibResult - analyticalResult) < TOLERANCE);
+                        BOOST_CHECK(std::fabs(mbslibResult - analyticalResult) < TOLERANCE);
+                    }
+                }
+                delete mbs;
+            }
         }
-        }
-        delete mbs;
-    }
-    }
     }
 }

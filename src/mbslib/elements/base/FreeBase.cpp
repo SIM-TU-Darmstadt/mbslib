@@ -26,10 +26,10 @@
  * Definition of mbslib::FreeBase
  */
 
-#include <mbslib/elements/base/FreeBase.hpp>
-#include <Eigen/LU>
 #include <Eigen/Cholesky>
 #include <Eigen/Geometry>
+#include <Eigen/LU>
+#include <mbslib/elements/base/FreeBase.hpp>
 
 using namespace mbslib;
 

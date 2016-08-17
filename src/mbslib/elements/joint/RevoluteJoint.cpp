@@ -25,12 +25,12 @@
  * Definition of mbslib::RevoluteJoint
  */
 
-#include <mbslib/elements/joint/RevoluteJoint.hpp>
-#include <mbslib/utility/mathtools.hpp>
-#include <mbslib/utility/internalTests.hpp>
 #include <Eigen/Geometry>
-#include <math.h>
 #include <iostream>
+#include <math.h>
+#include <mbslib/elements/joint/RevoluteJoint.hpp>
+#include <mbslib/utility/internalTests.hpp>
+#include <mbslib/utility/mathtools.hpp>
 
 using namespace mbslib;
 

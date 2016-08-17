@@ -11,9 +11,9 @@
 
 // Includes
 #include <iostream>
-#include <string>
-#include <mbslib/mbslib.hpp>
 #include <mbslib/elements/drive/ActiveSpringDamperDrive.hpp>
+#include <mbslib/mbslib.hpp>
+#include <string>
 
 extern "C" {
 

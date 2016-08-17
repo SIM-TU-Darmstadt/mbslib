@@ -28,9 +28,9 @@
 #ifndef __MBSLIB_TYPES_HPP__
 #define __MBSLIB_TYPES_HPP__
 
-#ifdef EIGEN_WORLD_VERSION
-#error "Eigen header files must be included after mbslib header files!"
-#endif
+//#ifdef EIGEN_WORLD_VERSION
+//#error "Eigen header files must be included after mbslib header files!"
+//#endif
 
 // vc does not have isnan - it does not belong to the c++ standard
 // however defining the function in the namespace std does not work either
@@ -55,8 +55,8 @@ typedef adouble TScalar;
 #else
 
 #include <Eigen/Core>
-#include <math.h>
 #include <float.h>
+#include <math.h>
 #ifdef USE_DOUBLES
 namespace mbslib {
 typedef double TScalar;

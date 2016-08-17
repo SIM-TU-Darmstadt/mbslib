@@ -25,8 +25,8 @@
  * \file src/example/exp_15_springs1D.cpp
  * 
  */
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <math.h>
 
 #include <mbslib/mbslib.hpp>
@@ -150,34 +150,40 @@ int main(void) {
                   << "Y: " << mbs->getEnd(i).getCoordinateFrame().r.y() << "\n"
                   << "Z: " << mbs->getEnd(i).getCoordinateFrame().r.z() << "\n"
                   << "\nR "
-                  << "\n" << mbs->getEnd(i).getCoordinateFrame().R << std::endl;
+                  << "\n"
+                  << mbs->getEnd(i).getCoordinateFrame().R << std::endl;
     }
 
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
     // Output of Joint Position
     for (size_t i = 0; i < mbs->getNumberOfJoints(); ++i) {
         TScalar q_tmp = mbs->getJoints().at(i)->getJointState().q;
         std::cout << "Joint Position" << i << ": " << q_tmp << std::endl;
     }
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
     // Output of Joint Velocity
     for (size_t i = 0; i < mbs->getNumberOfJoints(); ++i) {
         TScalar q_tmp = mbs->getJoints().at(i)->getJointState().dotq;
         std::cout << "Joint Velocity " << i << ": " << q_tmp << std::endl;
     }
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
     // Output of Joint Acceleration
     for (size_t i = 0; i < mbs->getNumberOfJoints(); ++i) {
         TScalar q_tmp = mbs->getJoints().at(i)->getJointState().ddotq;
         std::cout << "Joint Acceleration" << i << ": " << q_tmp << std::endl;
     }
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
     // Output of tau
     for (size_t i = 0; i < mbs->getNumberOfJoints(); ++i) {
         TScalar q_tmp = mbs->getJoints().at(i)->getJointForceTorque();
         std::cout << "torque " << i << ": " << q_tmp << std::endl;
     }
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
     // Output of tau
     for (size_t i = 0; i < mbs->getNumberOfJoints(); ++i) {
         TScalar q_tmp = mbs->getJoints().at(i)->getExternalJointForceTorque();

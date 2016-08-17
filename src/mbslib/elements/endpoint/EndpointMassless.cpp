@@ -25,9 +25,9 @@
  * Definition of mbslib::EndpointMassless
  */
 
+#include <Eigen/Geometry>
 #include <mbslib/elements/endpoint/EndpointMassless.hpp>
 #include <mbslib/utility/mathtools.hpp>
-#include <Eigen/Geometry>
 
 using namespace mbslib;
 

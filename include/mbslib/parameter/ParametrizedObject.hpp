@@ -27,14 +27,14 @@
  */
 #ifndef __PARAMETRIZEDOBJECT_HPP__
 #define __PARAMETRIZEDOBJECT_HPP__
-#include <mbslib/utility/types.hpp>
-#include <mbslib/MbslibBaseClass.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include <map>
-#include <set>
-#include <vector>
-#include <utility>
 #include <functional>
+#include <map>
+#include <mbslib/MbslibBaseClass.hpp>
+#include <mbslib/utility/types.hpp>
+#include <set>
+#include <utility>
+#include <vector>
 
 namespace mbslib {
 class ParameterAdapter;

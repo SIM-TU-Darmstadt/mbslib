@@ -26,14 +26,14 @@
  * Definition of mbslib::MbsCompound
  */
 
-#include <mbslib/elements/MbsCompound.hpp>
-#include <mbslib/elements/base/FreeBase.hpp>
-#include <mbslib/elements/base/FixedBase.hpp>
-#include <mbslib/utility/internalTests.hpp>
-#include <mbslib/utility/mathtools.hpp>
+#include <Eigen/Cholesky>
 #include <Eigen/Geometry>
 #include <Eigen/LU>
-#include <Eigen/Cholesky>
+#include <mbslib/elements/MbsCompound.hpp>
+#include <mbslib/elements/base/FixedBase.hpp>
+#include <mbslib/elements/base/FreeBase.hpp>
+#include <mbslib/utility/internalTests.hpp>
+#include <mbslib/utility/mathtools.hpp>
 
 using namespace mbslib;
 

@@ -25,8 +25,8 @@
  * \file mbslib/utility/SimulationControl.cpp
  * Definition of mbslib::SimulationControl
  */
-#include <mbslib/utility/SimulationControl.hpp>
 #include <iostream>
+#include <mbslib/utility/SimulationControl.hpp>
 using namespace mbslib;
 
 SimulationControl::SimulationControl(MbsCompound & mbs, CollisionDetector & cd)

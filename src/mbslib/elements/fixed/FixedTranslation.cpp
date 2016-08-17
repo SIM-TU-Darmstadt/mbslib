@@ -25,9 +25,9 @@
  * Definition of mbslib::FixedTranslation
  */
 
+#include <Eigen/Geometry>
 #include <mbslib/elements/fixed/FixedTranslation.hpp>
 #include <mbslib/utility/mathtools.hpp>
-#include <Eigen/Geometry>
 
 using namespace mbslib;
 

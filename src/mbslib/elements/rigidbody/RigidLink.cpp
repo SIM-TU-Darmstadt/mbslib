@@ -26,10 +26,10 @@
  * Definition of mbslib::RigidLink
  */
 
-#include <mbslib/elements/rigidbody/RigidLink.hpp>
-#include <mbslib/utility/mathtools.hpp>
-#include <mbslib/utility/internalTests.hpp>
 #include <Eigen/Geometry>
+#include <mbslib/elements/rigidbody/RigidLink.hpp>
+#include <mbslib/utility/internalTests.hpp>
+#include <mbslib/utility/mathtools.hpp>
 
 using namespace mbslib;
 
@@ -241,7 +241,7 @@ const TVector3 & RigidLink::getFixedRelativePosition() const {
     return this->fixedRelr;
 }
 
-RigidLink& RigidLink::operator=(const RigidBodyDescription& rigidBodyDescription) {
+RigidLink & RigidLink::operator=(const RigidBodyDescription & rigidBodyDescription) {
     this->com = rigidBodyDescription.com;
     this->fixedRelr = rigidBodyDescription.r;
     this->I = rigidBodyDescription.I;
@@ -255,12 +255,12 @@ void RigidLink::setCenterOfMass(const TVector3 & com) {
     updateABA();
 }
 
-void RigidLink::setFixedRelativePosition(const TVector3 &relr) {
+void RigidLink::setFixedRelativePosition(const TVector3 & relr) {
     this->fixedRelr = relr;
     updateABA();
 }
 
-void RigidLink::setInertiaTensor(const TMatrix3x3 &I) {
+void RigidLink::setInertiaTensor(const TMatrix3x3 & I) {
     this->I = I;
     updateABA();
 }

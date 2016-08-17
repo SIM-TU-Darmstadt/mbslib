@@ -26,10 +26,10 @@
  * Definition of mbslib::ParametrizedObject
  */
 
-#include <mbslib/parameter/ParametrizedObject.hpp>
+#include <boost/lexical_cast.hpp>
 #include <iostream>
 #include <mbslib/parameter/ParameterAdapter.hpp>
-#include <boost/lexical_cast.hpp>
+#include <mbslib/parameter/ParametrizedObject.hpp>
 
 using namespace mbslib;
 ParametrizedObject::ParametrizedObject(const std::string & name)

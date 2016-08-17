@@ -26,9 +26,9 @@
  * Definition of mbslib::Fork
  */
 
+#include <Eigen/Geometry>
 #include <mbslib/elements/fork/Fork.hpp>
 #include <mbslib/utility/internalTests.hpp>
-#include <Eigen/Geometry>
 
 using namespace mbslib;
 

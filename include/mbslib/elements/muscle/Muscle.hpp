@@ -27,8 +27,8 @@
 #ifndef __MBSLIB_MUSCLE_HPP__
 #define __MBSLIB_MUSCLE_HPP__
 
-#include <mbslib/elements/spring/Spring3D.hpp>
 #include <mbslib/elements/Controllable.hpp>
+#include <mbslib/elements/spring/Spring3D.hpp>
 
 #include <mbslib/elements/muscle/MuscleModel.hpp>
 

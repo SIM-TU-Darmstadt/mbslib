@@ -29,9 +29,9 @@
 #define BOOST_TEST_MODULE ParametrizedObject
 #include <boost/test/included/unit_test.hpp>
 #include <boost/test/included/unit_test_framework.hpp>
+#include <iostream>
 #include <mbslib/mbslib.hpp>
 #include <mbslib/mbslib.muscle.models.hpp>
-#include <iostream>
 
 using namespace mbslib;
 

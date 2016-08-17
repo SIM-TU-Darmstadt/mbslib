@@ -28,9 +28,9 @@
 #ifndef __MBSLIB_DRIVE_HPP__
 #define __MBSLIB_DRIVE_HPP__
 
+#include <mbslib/elements/joint/Joint1DOF.hpp>
 #include <mbslib/parameter/ParametrizedObject.hpp>
 #include <mbslib/utility/types.hpp>
-#include <mbslib/elements/joint/Joint1DOF.hpp>
 
 namespace mbslib {
 

@@ -28,8 +28,8 @@
 #ifndef __MBSLIB_SIMULATIONCONTROL_HPP__
 #define __MBSLIB_SIMULATIONCONTROL_HPP__
 
-#include <mbslib/elements/MbsCompound.hpp>
 #include <mbslib/collision/CollisionDetector.hpp>
+#include <mbslib/elements/MbsCompound.hpp>
 #include <mbslib/elements/force/ForceGeneratorSet.hpp>
 
 namespace mbslib {

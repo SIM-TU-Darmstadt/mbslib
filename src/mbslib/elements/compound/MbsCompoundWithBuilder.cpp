@@ -26,8 +26,8 @@
  * Definition of mbslib::MbsCompoundWithBuilder
  */
 
-#include <mbslib/elements/compound/MbsCompoundWithBuilder.hpp>
 #include <Eigen/Geometry>
+#include <mbslib/elements/compound/MbsCompoundWithBuilder.hpp>
 
 using namespace mbslib;
 
@@ -44,7 +44,9 @@ MbsCompoundWithBuilder::MbsCompoundWithBuilder(const std::string & name)
 }
 
 MbsCompoundWithBuilder::~MbsCompoundWithBuilder() {
-    for(auto i : forceGenerators){ delete i; }
+    for (auto i : forceGenerators) {
+        delete i;
+    }
 }
 
 FixedBase * MbsCompoundWithBuilder::addFixedBase(const std::string & name) {
@@ -379,8 +381,9 @@ TVectorX MbsCompoundWithBuilder::getMuscleControl(void) const {
     return c;
 }
 
-void MbsCompoundWithBuilder::addForceGenerator(ForceGenerator *fg) {
-    if(fg == nullptr) return;
+void MbsCompoundWithBuilder::addForceGenerator(ForceGenerator * fg) {
+    if (fg == nullptr)
+        return;
     forceGenerators.push_back(fg);
     MbsCompound::addForceGenerator(fg);
 }

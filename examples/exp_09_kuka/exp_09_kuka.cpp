@@ -28,8 +28,8 @@
 
 #include <Eigen/Geometry>
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <mbslib/utility/DeriveOMat.hpp>
 
 #include <math.h>
@@ -332,38 +332,44 @@ void printRobotInformation(MbsCompound *& mbs) {
                   << "Y: " << mbs->getEnd(EndPointID[i]).getCoordinateFrame().r.y() << "\n"
                   << "Z: " << mbs->getEnd(EndPointID[i]).getCoordinateFrame().r.z() << "\n"
                   << "\nR "
-                  << "\n" << mbs->getEnd(EndPointID[i]).getCoordinateFrame().R << std::endl;
+                  << "\n"
+                  << mbs->getEnd(EndPointID[i]).getCoordinateFrame().R << std::endl;
     }
 
     // Output of robots DOF and number of Joints
     std::cout << "DOF: " << mbs->getDOF() << "\n"
               << "Number of Joints: " << mbs->getNumberOfJoints() << std::endl;
 
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
     // Output of Joint Position
     for (size_t i = 0; i < mbs->getNumberOfJoints(); i++) {
         TScalar q_tmp = mbs->getJoints().at(i)->getJointState().q;
         std::cout << "Joint Position" << i << ": " << q_tmp << std::endl;
     }
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
     // Output of Joint Velocity
     for (size_t i = 0; i < mbs->getNumberOfJoints(); i++) {
         TScalar q_tmp = mbs->getJoints().at(i)->getJointState().dotq;
         std::cout << "Joint Velocity " << i << ": " << q_tmp << std::endl;
     }
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
     // Output of Joint Acceleration
     for (size_t i = 0; i < mbs->getNumberOfJoints(); i++) {
         TScalar q_tmp = mbs->getJoints().at(i)->getJointState().ddotq;
         std::cout << "Joint Acceleration" << i << ": " << q_tmp << std::endl;
     }
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
     // Output of torque
     for (size_t i = 0; i < mbs->getNumberOfJoints(); i++) {
         TScalar q_tmp = mbs->getJoints().at(i)->getJointForceTorque();
         std::cout << "torque " << i << ": " << q_tmp << std::endl;
     }
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
     // Output of ext. torque
     for (size_t i = 0; i < mbs->getNumberOfJoints(); i++) {
         TScalar q_tmp = mbs->getJoints().at(i)->getExternalJointForceTorque();
@@ -478,16 +484,19 @@ void simulation() {
     for (size_t i = 0; i < 12; i++) {
         std::cout << value[i] << " ";
     }
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
 
     std::cout << "\nJacobi:\n";
     for (size_t i = 0; i < 12; i++) {
         for (size_t j = 0; j < 18; j++) {
             std::cout << J[i][j] << " ";
         }
-        std::cout << "\n" << std::endl;
+        std::cout << "\n"
+                  << std::endl;
     }
-    std::cout << "\n" << std::endl;
+    std::cout << "\n"
+              << std::endl;
 
     delete dom;
     delete mbs;

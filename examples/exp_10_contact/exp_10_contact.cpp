@@ -24,9 +24,9 @@
  * \file src/example/exp_10_contact.cpp
  * 
  */
+#include <iostream>
 #include <mbslib/mbslib.hpp>
 #include <mbslib/mbslib.muscle.models.hpp>
-#include <iostream>
 
 int main(void) {
     using namespace mbslib;

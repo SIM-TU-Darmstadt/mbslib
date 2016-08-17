@@ -4,14 +4,14 @@
 #include <fstream>
 #include <iostream>
 #include <mbslib/elements/compound/MbsCompoundWithBuilder.hpp>
-#include <stdio.h>
 #include <mbslib/elements/spring/model/LinearSpringModel.hpp>
 #include <mbslib/utility/internalTests.hpp>
+#include <stdio.h>
 
 #define TOLERANCE 1e-9
 
-#define TEST_CHECK_EQUAL(A,B) MBS_TEST_CHECK_EQUAL(A,B,TOLERANCE)
-#define TEST_CHECK_EQUAL_RESULT(A,B,RESULT) MBS_TEST_CHECK_EQUAL_RESULT(A,B,RESULT,TOLERANCE)
+#define TEST_CHECK_EQUAL(A, B) MBS_TEST_CHECK_EQUAL(A, B, TOLERANCE)
+#define TEST_CHECK_EQUAL_RESULT(A, B, RESULT) MBS_TEST_CHECK_EQUAL_RESULT(A, B, RESULT, TOLERANCE)
 
 using namespace mbslib;
 
@@ -80,7 +80,7 @@ MbsCompoundWithBuilder * buildModel(TScalar pendulumMass, TScalar springConstant
     mbs->addEndpointMassless("pendulum startpoint");
     LinearSpringModel springModel(springConstant, damperConstant);
     mbs->addSpring(springModel, mbs->getEndpoints());
-   return mbs;
+    return mbs;
 }
 
 BOOST_AUTO_TEST_CASE(DirectKinematics) {
@@ -91,9 +91,9 @@ BOOST_AUTO_TEST_CASE(DirectKinematics) {
     Endpoint * endPoint;
     MbsCompoundWithBuilder * mbs;
 
-    const MMSTs _q_counter          {  0.0,  500.0,  1.0};
+    const MMSTs _q_counter{0.0, 500.0, 1.0};
 
-    mbs = buildModel(1.0,1.0,1.0);
+    mbs = buildModel(1.0, 1.0, 1.0);
     endPoint = mbs->getEndpointByName("pendulum endpoint");
     for (q(0) = _q_counter.min; q(0) <= _q_counter.max; q(0) += _q_counter.step) {
         mbs->setJointPosition(q);
@@ -117,75 +117,73 @@ BOOST_AUTO_TEST_CASE(DirectDynamics) {
     std::cout << std::setprecision(40);
 
     // min, max, step
-    const MMSTs _tau                {-10.0,   10.0,   5.0};
-    const MMSTs _gravity            {-10.0,   10.0,   5.0};
-    const MMSTs _pendulumMass       {  5.0,   30.0,   5.0};
-    const MMSTs _q_counter          {  0.0,  500.0,  25.0};
-    const MMSTs _dq_counter         {  0.0,   50.0,  10.0};
-    const MMSTs _springConstant     {  1.0,  151.0,   5.0};
-    const MMSTs _damperConstant     {  0.0,    5.0,   0.5};
+    const MMSTs _tau{-10.0, 10.0, 5.0};
+    const MMSTs _gravity{-10.0, 10.0, 5.0};
+    const MMSTs _pendulumMass{5.0, 30.0, 5.0};
+    const MMSTs _q_counter{0.0, 500.0, 25.0};
+    const MMSTs _dq_counter{0.0, 50.0, 10.0};
+    const MMSTs _springConstant{1.0, 151.0, 5.0};
+    const MMSTs _damperConstant{0.0, 5.0, 0.5};
 
     for (TScalar gravity = _gravity.min; gravity <= _gravity.max; gravity += _gravity.step) {
-    for (TScalar pendulumMass = _pendulumMass.min; pendulumMass <= _pendulumMass.max; pendulumMass += _pendulumMass.step) {
-    for (TScalar springConstant = _springConstant.min; springConstant <= _springConstant.max; springConstant += _springConstant.step) {
-    for (TScalar damperConstant = _damperConstant.min; damperConstant <= _damperConstant.max; damperConstant += _damperConstant.step) {
-        MbsCompoundWithBuilder * mbs;
+        for (TScalar pendulumMass = _pendulumMass.min; pendulumMass <= _pendulumMass.max; pendulumMass += _pendulumMass.step) {
+            for (TScalar springConstant = _springConstant.min; springConstant <= _springConstant.max; springConstant += _springConstant.step) {
+                for (TScalar damperConstant = _damperConstant.min; damperConstant <= _damperConstant.max; damperConstant += _damperConstant.step) {
+                    MbsCompoundWithBuilder * mbs;
 
-        mbs = buildModel(pendulumMass, springConstant, damperConstant, TVector3(0.0, -gravity, 0.0));
-        Joint1DOF * joint1 = mbs->getJointByName("q");
+                    mbs = buildModel(pendulumMass, springConstant, damperConstant, TVector3(0.0, -gravity, 0.0));
+                    Joint1DOF * joint1 = mbs->getJointByName("q");
 
-        for (TScalar tau = _tau.min; tau <= _tau.max; tau += _tau.step) {
-        for (q(0) = _q_counter.min; q(0) <= _q_counter.max; q(0) += _q_counter.step) {
-        for (dq(0) = _dq_counter.min; dq(0) <= _dq_counter.max; dq(0) += _dq_counter.step) {
+                    for (TScalar tau = _tau.min; tau <= _tau.max; tau += _tau.step) {
+                        for (q(0) = _q_counter.min; q(0) <= _q_counter.max; q(0) += _q_counter.step) {
+                            for (dq(0) = _dq_counter.min; dq(0) <= _dq_counter.max; dq(0) += _dq_counter.step) {
 
-            auto printData = [&]() {
-                std::cout << "=================================" << std::endl;
-                std::cout << "k " << springConstant << " d " << damperConstant << std::endl;
-                std::cout << "q " << q << " dq " << dq << std::endl;
-                std::cout << "m " << pendulumMass << " g " << gravity << " tau " << tau << std::endl;
-            };
-            auto printResults = [&]() {
-                std::cout << "mbslib result: " << std::endl << mbslibResult.format(LongFormat) << std::endl;
-                std::cout << analyticalResult.format(LongFormat) << std::endl;
-            };
+                                auto printData = [&]() {
+                                    std::cout << "=================================" << std::endl;
+                                    std::cout << "k " << springConstant << " d " << damperConstant << std::endl;
+                                    std::cout << "q " << q << " dq " << dq << std::endl;
+                                    std::cout << "m " << pendulumMass << " g " << gravity << " tau " << tau << std::endl;
+                                };
+                                auto printResults = [&]() {
+                                    std::cout << "mbslib result: " << std::endl
+                                              << mbslibResult.format(LongFormat) << std::endl;
+                                    std::cout << analyticalResult.format(LongFormat) << std::endl;
+                                };
 
-            analyticalResult = calculateDirectDynamics(q, dq, tau, gravity, pendulumMass, springConstant, damperConstant);
+                                analyticalResult = calculateDirectDynamics(q, dq, tau, gravity, pendulumMass, springConstant, damperConstant);
 
-            mbs->setJointPosition(q);
-            mbs->setJointVelocity(dq);
-            joint1->setJointForceTorque(tau);
+                                mbs->setJointPosition(q);
+                                mbs->setJointVelocity(dq);
+                                joint1->setJointForceTorque(tau);
 
-            mbs->doABA();
+                                mbs->doABA();
 
-            mbslibResult = mbs->getJointAcceleration();
+                                mbslibResult = mbs->getJointAcceleration();
 
-            bool result;
-            TEST_CHECK_EQUAL_RESULT(mbslibResult,analyticalResult,result);
+                                bool result;
+                                TEST_CHECK_EQUAL_RESULT(mbslibResult, analyticalResult, result);
 
+                                if (!result) {
+                                    printData();
+                                    printResults();
+                                }
 
-            if(!result) {
-                printData();
-                printResults();
+                                mbs->doCrba();
+
+                                mbslibResult = mbs->getJointAcceleration();
+                                TEST_CHECK_EQUAL_RESULT(mbslibResult, analyticalResult, result);
+
+                                if (!result) {
+                                    printData();
+                                    printResults();
+                                }
+                            }
+                        }
+                    }
+                    delete mbs;
+                }
             }
-
-
-            mbs->doCrba();
-
-            mbslibResult = mbs->getJointAcceleration();
-            TEST_CHECK_EQUAL_RESULT(mbslibResult,analyticalResult,result);
-
-            if(!result) {
-                printData();
-                printResults();
-            }
-
         }
-        }
-        }
-        delete mbs;
-    }
-    }
-    }
     }
 }
 
@@ -202,62 +200,61 @@ BOOST_AUTO_TEST_CASE(InverseDynamics) {
     TScalar analyticalResult;
 
     // min, max, step
-    const MMSTs _ddq                {-10.0,   10.0,   5.0};
-    const MMSTs _gravity            {-10.0,   10.0,   5.0};
-    const MMSTs _pendulumMass       {  5.0,   30.0,   5.0};
-    const MMSTs _q_counter          {  0.0,  500.0,  25.0};
-    const MMSTs _dq_counter         {  0.0,   50.0,  10.0};
-    const MMSTs _springConstant     {  1.0,  151.0,   5.0};
-    const MMSTs _damperConstant     {  0.0,    5.0,   0.5};
+    const MMSTs _ddq{-10.0, 10.0, 5.0};
+    const MMSTs _gravity{-10.0, 10.0, 5.0};
+    const MMSTs _pendulumMass{5.0, 30.0, 5.0};
+    const MMSTs _q_counter{0.0, 500.0, 25.0};
+    const MMSTs _dq_counter{0.0, 50.0, 10.0};
+    const MMSTs _springConstant{1.0, 151.0, 5.0};
+    const MMSTs _damperConstant{0.0, 5.0, 0.5};
 
     for (TScalar gravity = _gravity.min; gravity <= _gravity.max; gravity += _gravity.step) {
-    for (TScalar pendulumMass = _pendulumMass.min; pendulumMass <= _pendulumMass.max; pendulumMass += _pendulumMass.step) {
-    for (TScalar springConstant = _springConstant.min; springConstant <= _springConstant.max; springConstant += _springConstant.step) {
-    for (TScalar damperConstant = _damperConstant.min; damperConstant <= _damperConstant.max; damperConstant += _damperConstant.step) {
-        MbsCompoundWithBuilder * mbs;
+        for (TScalar pendulumMass = _pendulumMass.min; pendulumMass <= _pendulumMass.max; pendulumMass += _pendulumMass.step) {
+            for (TScalar springConstant = _springConstant.min; springConstant <= _springConstant.max; springConstant += _springConstant.step) {
+                for (TScalar damperConstant = _damperConstant.min; damperConstant <= _damperConstant.max; damperConstant += _damperConstant.step) {
+                    MbsCompoundWithBuilder * mbs;
 
-        mbs = buildModel(pendulumMass, springConstant, damperConstant, TVector3(0.0, -gravity, 0.0));
-        Joint1DOF * joint1 = mbs->getJointByName("q");
+                    mbs = buildModel(pendulumMass, springConstant, damperConstant, TVector3(0.0, -gravity, 0.0));
+                    Joint1DOF * joint1 = mbs->getJointByName("q");
 
-        for (ddq(0) = _ddq.min; ddq(0) <= _ddq.max; ddq(0) += _ddq.step) {
-        for (q(0) = _q_counter.min; q(0) <= _q_counter.max; q(0) += _q_counter.step) {
-        for (dq(0) = _dq_counter.min; dq(0) <= _dq_counter.max; dq(0) += _dq_counter.step) {
+                    for (ddq(0) = _ddq.min; ddq(0) <= _ddq.max; ddq(0) += _ddq.step) {
+                        for (q(0) = _q_counter.min; q(0) <= _q_counter.max; q(0) += _q_counter.step) {
+                            for (dq(0) = _dq_counter.min; dq(0) <= _dq_counter.max; dq(0) += _dq_counter.step) {
 
-            auto printData = [&]() {
-                std::cout << "=================================" << std::endl;
-                std::cout << "k " << springConstant << " d " << damperConstant << std::endl;
-                std::cout << "q " << q << " dq " << dq << " ddq " << ddq << std::endl;
-                std::cout << "m " << pendulumMass << " g " << gravity << std::endl;
-            };
-            auto printResults = [&]() {
-                std::cout << "mbslib result: " << std::endl << mbslibResult << std::endl;
-                std::cout << analyticalResult << std::endl;
-            };
+                                auto printData = [&]() {
+                                    std::cout << "=================================" << std::endl;
+                                    std::cout << "k " << springConstant << " d " << damperConstant << std::endl;
+                                    std::cout << "q " << q << " dq " << dq << " ddq " << ddq << std::endl;
+                                    std::cout << "m " << pendulumMass << " g " << gravity << std::endl;
+                                };
+                                auto printResults = [&]() {
+                                    std::cout << "mbslib result: " << std::endl
+                                              << mbslibResult << std::endl;
+                                    std::cout << analyticalResult << std::endl;
+                                };
 
+                                mbs->setJointPosition(q);
+                                mbs->setJointVelocity(dq);
+                                mbs->setJointAcceleration(ddq);
 
-            mbs->setJointPosition(q);
-            mbs->setJointVelocity(dq);
-            mbs->setJointAcceleration(ddq);
+                                mbs->doRne();
 
-            mbs->doRne();
+                                mbslibResult = joint1->getJointForceTorque();
+                                analyticalResult = calculateInverseDynamics(q, dq, ddq, gravity, pendulumMass, springConstant, damperConstant);
+                                bool result;
 
-            mbslibResult = joint1->getJointForceTorque();
-            analyticalResult = calculateInverseDynamics(q, dq, ddq, gravity, pendulumMass, springConstant, damperConstant);
-            bool result;
+                                result = std::fabs(mbslibResult - analyticalResult) < TOLERANCE;
 
-            result = std::fabs(mbslibResult-analyticalResult) < TOLERANCE;
-
-            if(!result) {
-                printData();
-                printResults();
+                                if (!result) {
+                                    printData();
+                                    printResults();
+                                }
+                            }
+                        }
+                    }
+                    delete mbs;
+                }
             }
-
         }
-        }
-        }
-        delete mbs;
-    }
-    }
-    }
     }
 }

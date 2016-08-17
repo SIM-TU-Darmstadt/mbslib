@@ -28,8 +28,8 @@
 #ifndef __MBSLIB_MBSOBJECT_HPP__
 #define __MBSLIB_MBSOBJECT_HPP__
 
-#include <mbslib/parameter/ParametrizedObject.hpp>
 #include <mbslib/elements/IIntegrate.hpp>
+#include <mbslib/parameter/ParametrizedObject.hpp>
 #include <mbslib/utility/types.hpp>
 
 #include <string>

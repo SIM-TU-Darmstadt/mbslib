@@ -26,11 +26,11 @@
  * Definition of mbslib::Joint1DOF
  */
 
-#include <mbslib/utility/types.hpp>
-#include <mbslib/elements/joint/Joint1DOF.hpp>
-#include <mbslib/elements/joint/JointNDOF.hpp>
 #include <float.h>
 #include <iostream>
+#include <mbslib/elements/joint/Joint1DOF.hpp>
+#include <mbslib/elements/joint/JointNDOF.hpp>
+#include <mbslib/utility/types.hpp>
 
 using namespace mbslib;
 

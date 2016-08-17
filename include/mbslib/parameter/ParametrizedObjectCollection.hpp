@@ -28,8 +28,8 @@
 #ifndef __PARAMETRIZEDOBJECTCOLLECTION_HPP__
 #define __PARAMETRIZEDOBJECTCOLLECTION_HPP__
 
-#include <mbslib/parameter/ParametrizedObject.hpp>
 #include <mbslib/MbslibBaseClass.hpp>
+#include <mbslib/parameter/ParametrizedObject.hpp>
 #include <vector>
 namespace mbslib {
 

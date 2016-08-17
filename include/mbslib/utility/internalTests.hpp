@@ -82,28 +82,28 @@ bool unitVector(const TVector6 & v, const std::string & name = "", const std::st
  */
 bool notNearZero(TScalar s, const std::string & name = "", const std::string & place = "", int line = 0);
 
-template<typename T>
+template < typename T >
 struct MinMaxStep {
     T min;
     T max;
     T step;
 };
 
-typedef MinMaxStep<TScalar> MMSTs;
+typedef MinMaxStep< TScalar > MMSTs;
 
-#define MBS_TEST_CHECK_EQUAL(A,B,TOLERANCE)\
-{\
-    TVectorX factors = A.cwiseAbs().cwiseMax(B.cwiseAbs()).cwiseMax(1.0);\
-    BOOST_CHECK((A - B).cwiseQuotient(factors).isZero(TOLERANCE));\
-}
-#define MBS_TEST_CHECK_EQUAL_RESULT(A,B,RESULT,TOLERANCE)\
-{\
-    TVectorX factors = A.cwiseAbs().cwiseMax(B.cwiseAbs()).cwiseMax(1.0);\
-    BOOST_CHECK(RESULT = (A - B).cwiseQuotient(factors).isZero(TOLERANCE));\
-}
-template<typename T>
-bool test_check_equal(const T& A, const T& B, const double tolerance=1e-10) {
-    TVectorX factors = A.cwiseAbs().cwiseMax(B.cwiseAbs()).cwiseMax(1.0);
+#define MBS_TEST_CHECK_EQUAL(A, B, TOLERANCE)                                 \
+    {                                                                         \
+        TMatrixX factors = A.cwiseAbs().cwiseMax(B.cwiseAbs()).cwiseMax(1.0); \
+        BOOST_CHECK((A - B).cwiseQuotient(factors).isZero(TOLERANCE));        \
+    }
+#define MBS_TEST_CHECK_EQUAL_RESULT(A, B, RESULT, TOLERANCE)                    \
+    {                                                                           \
+        TMatrixX factors = A.cwiseAbs().cwiseMax(B.cwiseAbs()).cwiseMax(1.0);   \
+        BOOST_CHECK(RESULT = (A - B).cwiseQuotient(factors).isZero(TOLERANCE)); \
+    }
+template < typename T >
+bool test_check_equal(const T & A, const T & B, const double tolerance = 1e-10) {
+    T factors = A.cwiseAbs().cwiseMax(B.cwiseAbs()).cwiseMax(1.0);
     bool result = false;
     BOOST_CHECK(result = (A - B).cwiseQuotient(factors).isZero(tolerance));
     return result;

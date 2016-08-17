@@ -27,8 +27,8 @@
  */
 #ifndef __MBSLIB_FORCEGENERATORSET_HPP__
 #define __MBSLIB_FORCEGENERATORSET_HPP__
-#include <mbslib/elements/force/ForceGenerator.hpp>
 #include <mbslib/MbslibBaseClass.hpp>
+#include <mbslib/elements/force/ForceGenerator.hpp>
 
 #include <vector>
 namespace mbslib {

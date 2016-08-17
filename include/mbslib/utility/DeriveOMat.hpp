@@ -30,8 +30,8 @@
 
 #ifdef USE_ADOLC
 
-#include <mbslib/parameter/ParametrizedObjectCollection.hpp>
 #include <mbslib/parameter/ParameterAdapter.hpp>
+#include <mbslib/parameter/ParametrizedObjectCollection.hpp>
 
 namespace mbslib {
 

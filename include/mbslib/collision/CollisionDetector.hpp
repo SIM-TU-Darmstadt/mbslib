@@ -29,8 +29,8 @@
 #define __MBSLIB_COLLISIONDETECTOR_HPP__
 
 #include <mbslib/collision/PointContact.hpp>
-#include <mbslib/elements/force/ForceGenerator.hpp>
 #include <mbslib/collision/PointContactHandler.hpp>
+#include <mbslib/elements/force/ForceGenerator.hpp>
 
 #include <vector>
 

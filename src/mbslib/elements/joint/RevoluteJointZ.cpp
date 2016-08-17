@@ -25,8 +25,8 @@
  * Definition of mbslib::RevoluteJointZ
  */
 
-#include <mbslib/elements/joint/RevoluteJointZ.hpp>
 #include <Eigen/Geometry>
+#include <mbslib/elements/joint/RevoluteJointZ.hpp>
 
 using namespace mbslib;
 

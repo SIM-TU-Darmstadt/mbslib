@@ -25,11 +25,11 @@
  * Definition of mbslib::PrismaticJoint
  */
 
-#include <mbslib/elements/joint/PrismaticJoint.hpp>
-#include <mbslib/utility/mathtools.hpp>
-#include <mbslib/utility/internalTests.hpp>
 #include <Eigen/Geometry>
 #include <math.h>
+#include <mbslib/elements/joint/PrismaticJoint.hpp>
+#include <mbslib/utility/internalTests.hpp>
+#include <mbslib/utility/mathtools.hpp>
 
 using namespace mbslib;
 

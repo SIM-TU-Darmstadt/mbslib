@@ -25,10 +25,10 @@
  * 
  */
 #include <mbslib/elements/base/FixedBase.hpp>
+#include <mbslib/elements/endpoint/Endpoint.hpp>
 #include <mbslib/elements/joint/PrismaticJoint.hpp>
 #include <mbslib/elements/joint/RevoluteJoint.hpp>
 #include <mbslib/elements/rigidbody/RigidLink.hpp>
-#include <mbslib/elements/endpoint/Endpoint.hpp>
 
 #include <mbslib/elements/compound/MbsCompoundWithBuilder.hpp>
 
@@ -45,8 +45,8 @@
 #include <mbslib/utility/DeriveOMat.hpp>
 
 #include <Eigen/Geometry>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <math.h>
 
 #define ENDPOINTFORCEID 0

@@ -26,9 +26,9 @@
  * Definition of mbslib::ParametrizedObjectCollection
  */
 
-#include <mbslib/parameter/ParametrizedObjectCollection.hpp>
 #include <iostream>
 #include <mbslib/parameter/ParameterAdapter.hpp>
+#include <mbslib/parameter/ParametrizedObjectCollection.hpp>
 
 using namespace mbslib;
 

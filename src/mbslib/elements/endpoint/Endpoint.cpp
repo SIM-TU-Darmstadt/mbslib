@@ -25,9 +25,9 @@
  * Definition of mbslib::Endpoint
  */
 
+#include <Eigen/Geometry>
 #include <mbslib/elements/endpoint/Endpoint.hpp>
 #include <mbslib/utility/mathtools.hpp>
-#include <Eigen/Geometry>
 
 using namespace mbslib;
 

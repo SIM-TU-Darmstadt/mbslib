@@ -192,13 +192,13 @@ public:
    */
     const TVector3 & getFixedRelativePosition() const;
 
-    RigidLink& operator=(const RigidBodyDescription& rigidBodyDescription);
+    RigidLink & operator=(const RigidBodyDescription & rigidBodyDescription);
 
     /**
      * @brief Sets the center of mass vector.
      * @param com The center of mass.
      */
-    void setCenterOfMass(const TVector3 &com);
+    void setCenterOfMass(const TVector3 & com);
 
     /**
      * @brief Sets the relativ position.
@@ -210,7 +210,7 @@ public:
      * @brief Sets the inertia tensor of this rigid link.
      * @param I The inertia tensor.
      */
-    void setInertiaTensor(const TMatrix3x3 &I);
+    void setInertiaTensor(const TMatrix3x3 & I);
 
     /**
      * @brief Sets the mass of this rigid link.

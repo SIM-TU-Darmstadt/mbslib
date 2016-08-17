@@ -26,18 +26,18 @@
 
 #include <mbslib/config.hpp>
 #include <mbslib/elements/MbsCompound.hpp>
-#include <mbslib/elements/compound/MbsCompoundWithBuilder.hpp>
 #include <mbslib/elements/compound/MbsCompoundWithAdder.hpp>
-#include <mbslib/elements/spring/Spring3D.hpp>
+#include <mbslib/elements/compound/MbsCompoundWithBuilder.hpp>
+#include <mbslib/elements/joint/JointForceSetter.hpp>
 #include <mbslib/elements/spring/Spring1D.hpp>
 #include <mbslib/elements/spring/Spring1DSingleEnded.hpp>
+#include <mbslib/elements/spring/Spring3D.hpp>
 #include <mbslib/elements/spring/SpringModel.hpp>
 #include <mbslib/elements/spring/model/LinearSpringModel.hpp>
 #include <mbslib/elements/spring/model/LinearSpringWithRopeModel.hpp>
-#include <mbslib/elements/joint/JointForceSetter.hpp>
 
-#include <mbslib/utility/modeltools.hpp>
 #include <mbslib/utility/mathtools.hpp>
+#include <mbslib/utility/modeltools.hpp>
 
 #include <mbslib/utility/DeriveOMat.hpp>
 

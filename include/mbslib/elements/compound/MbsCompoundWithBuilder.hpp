@@ -30,25 +30,25 @@
 
 #include <mbslib/elements/MbsCompound.hpp>
 
-#include <mbslib/elements/endpoint/EndpointMassless.hpp>
-#include <mbslib/elements/drive/Drive.hpp>
-#include <mbslib/elements/drive/DriveGenerator.hpp>
 #include <mbslib/elements/base/FixedBase.hpp>
 #include <mbslib/elements/base/FreeBase.hpp>
+#include <mbslib/elements/drive/Drive.hpp>
+#include <mbslib/elements/drive/DriveGenerator.hpp>
+#include <mbslib/elements/endpoint/EndpointMassless.hpp>
 #include <mbslib/elements/fixed/FixedRotation.hpp>
 #include <mbslib/elements/fixed/FixedTranslation.hpp>
 #include <mbslib/elements/fork/Fork.hpp>
 #include <mbslib/elements/joint/PrismaticJoint.hpp>
 #include <mbslib/elements/joint/RevoluteJoint.hpp>
 #include <mbslib/elements/joint/RevoluteJointZ.hpp>
+#include <mbslib/elements/muscle/Muscle.hpp>
 #include <mbslib/elements/rigidbody/RigidLink.hpp>
-#include <mbslib/elements/spring/Spring3D.hpp>
 #include <mbslib/elements/spring/Spring1D.hpp>
 #include <mbslib/elements/spring/Spring1DSingleEnded.hpp>
-#include <mbslib/elements/muscle/Muscle.hpp>
+#include <mbslib/elements/spring/Spring3D.hpp>
 
-#include <stack>
 #include <map>
+#include <stack>
 
 namespace mbslib {
 

@@ -21,8 +21,8 @@
  * along with MBSlib.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <mbslib/MbslibBaseClass.hpp>
 #include <algorithm>
+#include <mbslib/MbslibBaseClass.hpp>
 #include <ostream>
 
 using namespace mbslib;

@@ -2,11 +2,11 @@ extern "C" {
 #include <motionEquation.h>
 }
 
-#include <mbslib/mbslib.hpp>
 #include <Eigen/Core>
 #include <iostream>
-#include <mbslib/elements/spring/model/LinearSpringModel.hpp>
 #include <mbslib/elements/drive/PassiveSpringDamperDrive.hpp>
+#include <mbslib/elements/spring/model/LinearSpringModel.hpp>
+#include <mbslib/mbslib.hpp>
 
 namespace mbslib {
 typedef MbsObject * MbsObjectPtr;
