@@ -114,7 +114,7 @@ void MbsCompound::doCrba(const TVector3 & g, const std::vector< PointContact > &
 //M.lu().solve(tau - tauCGExt, & ddq);
 
 #if EIGEN_WORLD_VERSION >= 3
-    Eigen::PartialPivLU< TMatrixX > lu(M);
+    Eigen::FullPivLU< TMatrixX > lu(M);
     checkNotZero(lu.determinant());
     ddq = lu.solve(tau - tauCGExt);
 #else
