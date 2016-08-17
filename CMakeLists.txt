@@ -193,6 +193,12 @@ message("adding examples")
 add_subdirectory(examples)
 endif()
 
+if(BUILD_EXTENSIONS)
+message("adding extensions")
+include_directories(extensions)
+add_subdirectory(extensions)
+endif()
+
 if(BUILD_TESTING)
 message("adding tests")
 add_subdirectory(tests)

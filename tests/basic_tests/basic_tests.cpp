@@ -1,16 +1,15 @@
 #define BOOST_TEST_MODULE BasicTests
 #include <boost/test/included/unit_test.hpp>
 
+#include <fstream>
+#include <iostream>
 #include <mbslib/elements/compound/MbsCompoundWithBuilder.hpp>
 #include <mbslib/elements/joint/JointForceSetter.hpp>
-#include <iostream>
-#include <fstream>
 #include <stdio.h>
 
 using namespace mbslib;
 
-BOOST_AUTO_TEST_CASE(BasicTest)
-{
+BOOST_AUTO_TEST_CASE(BasicTest) {
 
     TVectorX l(2);
     l << 1.0, 2.0;
@@ -29,13 +28,13 @@ BOOST_AUTO_TEST_CASE(BasicTest)
 
     TVectorX zero = TVectorX::Zero(2);
 
-    MbsCompoundWithBuilder* mbs;
-    Endpoint * ep1, *ep2;
+    MbsCompoundWithBuilder * mbs;
+    Endpoint *ep1, *ep2;
     Joint1DOF *j1, *j2;
     RigidLink *rl1, *rl2;
-    Fork *fork;
+    Fork * fork;
     FixedTranslation *ft1, *ft2;
-    Base* base;
+    Base * base;
     JointForceSetter *jfs1, *jfs2;
 
     TVector3 mbslibResult;
@@ -45,12 +44,12 @@ BOOST_AUTO_TEST_CASE(BasicTest)
     base = mbs->addFixedBase("base");
 
     j1 = mbs->addRevoluteJoint(TVector3(0, 0, 1), "q1");
-    rl1 = mbs->addRigidLink(TVector3(0,l(0),0),r_com[0], m(0), I_com[0],"link1");
+    rl1 = mbs->addRigidLink(TVector3(0, l(0), 0), r_com[0], m(0), I_com[0], "link1");
     j2 = mbs->addPrismaticJoint(TVector3(0, 1, 0), "q2");
-    rl2 = mbs->addRigidLink(TVector3(0,0,l(1)),r_com[1], m(1), I_com[1],"link2");
+    rl2 = mbs->addRigidLink(TVector3(0, 0, l(1)), r_com[1], m(1), I_com[1], "link2");
     fork = mbs->addFork("fork");
-        ft1 = mbs->addFixedTranslation(TVector3(0, 0, 0.5), "link3");
-        ep1 = mbs->addEndpoint("ep1");
+    ft1 = mbs->addFixedTranslation(TVector3(0, 0, 0.5), "link3");
+    ep1 = mbs->addEndpoint("ep1");
     ft2 = mbs->addFixedTranslation(TVector3(-0.5, 0, 0.0), "link4");
     ep2 = mbs->addEndpoint("ep2");
 
@@ -64,8 +63,8 @@ BOOST_AUTO_TEST_CASE(BasicTest)
 
     /// Gravity test
     testValue.setRandom();
-    mbs->setGravitation(testValue.segment(0,3));
-    BOOST_CHECK_EQUAL(testValue.segment(0,3), mbs->getGravitation());
+    mbs->setGravitation(testValue.segment(0, 3));
+    BOOST_CHECK_EQUAL(testValue.segment(0, 3), mbs->getGravitation());
 
     /// Elements size tests
     BOOST_CHECK_EQUAL(10, mbs->getElements().size());
@@ -123,20 +122,20 @@ BOOST_AUTO_TEST_CASE(BasicTest)
     BOOST_CHECK_EQUAL(fork, mbs->getElementByName("fork"));
 
     /// State tests
-    for(size_t i = 0; i < 100; ++i) {
+    for (size_t i = 0; i < 100; ++i) {
         testValue.setRandom();
 
-        mbs->setJointPosition(testValue.segment(0,2));
-        BOOST_CHECK_EQUAL(testValue.segment(0,2), mbs->getJointPosition());
+        mbs->setJointPosition(testValue.segment(0, 2));
+        BOOST_CHECK_EQUAL(testValue.segment(0, 2), mbs->getJointPosition());
 
-        mbs->setJointVelocity(testValue.segment(2,2));
-        BOOST_CHECK_EQUAL(testValue.segment(2,2), mbs->getJointVelocity());
+        mbs->setJointVelocity(testValue.segment(2, 2));
+        BOOST_CHECK_EQUAL(testValue.segment(2, 2), mbs->getJointVelocity());
 
-        mbs->setJointAcceleration(testValue.segment(4,2));
-        BOOST_CHECK_EQUAL(testValue.segment(4,2), mbs->getJointAcceleration());
+        mbs->setJointAcceleration(testValue.segment(4, 2));
+        BOOST_CHECK_EQUAL(testValue.segment(4, 2), mbs->getJointAcceleration());
 
-        mbs->setJointForceTorque(testValue.segment(6,2));
-        BOOST_CHECK_EQUAL(testValue.segment(6,2), mbs->getJointForceTorque());
+        mbs->setJointForceTorque(testValue.segment(6, 2));
+        BOOST_CHECK_EQUAL(testValue.segment(6, 2), mbs->getJointForceTorque());
         //BOOST_CHECK_EQUAL(mbs->getControlValues(), mbs->getJointForceTorque());
 
         BOOST_CHECK_EQUAL(testValue(0), mbs->getState()(0));
@@ -149,8 +148,8 @@ BOOST_AUTO_TEST_CASE(BasicTest)
         BOOST_CHECK_EQUAL(testValue(5), mbs->getDStateDt()(3));
 
         testValue.setRandom();
-        mbs->setState(testValue.segment(0,4));
-        BOOST_CHECK_EQUAL(testValue.segment(0,4), mbs->getState());
+        mbs->setState(testValue.segment(0, 4));
+        BOOST_CHECK_EQUAL(testValue.segment(0, 4), mbs->getState());
         BOOST_CHECK_EQUAL(testValue(0), mbs->getJointPosition()(0));
         BOOST_CHECK_EQUAL(testValue(2), mbs->getJointPosition()(1));
         BOOST_CHECK_EQUAL(testValue(1), mbs->getJointVelocity()(0));
@@ -158,15 +157,14 @@ BOOST_AUTO_TEST_CASE(BasicTest)
         BOOST_CHECK_EQUAL(mbs->getDStateDt()(0), mbs->getState()(1));
         BOOST_CHECK_EQUAL(mbs->getDStateDt()(2), mbs->getState()(3));
 
-
         jfs1->setControlValue(testValue(0));
         jfs2->setControlValue(testValue(1));
         BOOST_CHECK_EQUAL(testValue(0), jfs1->getControlValue());
         BOOST_CHECK_EQUAL(testValue(1), jfs2->getControlValue());
 
-        BOOST_CHECK_EQUAL(testValue.segment(0,2), mbs->getControlValues());
+        BOOST_CHECK_EQUAL(testValue.segment(0, 2), mbs->getControlValues());
 
-        mbs->setControlValues(testValue.segment(2,2));
+        mbs->setControlValues(testValue.segment(2, 2));
         BOOST_CHECK_EQUAL(testValue(2), jfs1->getControlValue());
         BOOST_CHECK_EQUAL(testValue(3), jfs2->getControlValue());
     }
@@ -177,13 +175,12 @@ BOOST_AUTO_TEST_CASE(BasicTest)
 
     BOOST_CHECK_EQUAL(TVector3::Zero(), j1->getCoordinateFrame().r);
     BOOST_CHECK_EQUAL(TVector3::Zero(), base->getCoordinateFrame().r);
-    BOOST_CHECK_EQUAL(TVector3(0,l(0),0), j2->getCoordinateFrame().r);
-    BOOST_CHECK_EQUAL(TVector3(0,l(0),0), rl1->getCoordinateFrame().r);
-    BOOST_CHECK_EQUAL(TVector3(0,l(0),l(1)), rl2->getCoordinateFrame().r);
-    BOOST_CHECK_EQUAL(TVector3(0,l(0),l(1)), fork->getCoordinateFrame().r);
-    BOOST_CHECK_EQUAL(TVector3(0,l(0),l(1)+0.5), ft1->getCoordinateFrame().r);
-    BOOST_CHECK_EQUAL(TVector3(0,l(0),l(1)+0.5), ep1->getCoordinateFrame().r);
-    BOOST_CHECK_EQUAL(TVector3(-0.5,l(0),l(1)), ft2->getCoordinateFrame().r);
-    BOOST_CHECK_EQUAL(TVector3(-0.5,l(0),l(1)), ep2->getCoordinateFrame().r);
-
+    BOOST_CHECK_EQUAL(TVector3(0, l(0), 0), j2->getCoordinateFrame().r);
+    BOOST_CHECK_EQUAL(TVector3(0, l(0), 0), rl1->getCoordinateFrame().r);
+    BOOST_CHECK_EQUAL(TVector3(0, l(0), l(1)), rl2->getCoordinateFrame().r);
+    BOOST_CHECK_EQUAL(TVector3(0, l(0), l(1)), fork->getCoordinateFrame().r);
+    BOOST_CHECK_EQUAL(TVector3(0, l(0), l(1) + 0.5), ft1->getCoordinateFrame().r);
+    BOOST_CHECK_EQUAL(TVector3(0, l(0), l(1) + 0.5), ep1->getCoordinateFrame().r);
+    BOOST_CHECK_EQUAL(TVector3(-0.5, l(0), l(1)), ft2->getCoordinateFrame().r);
+    BOOST_CHECK_EQUAL(TVector3(-0.5, l(0), l(1)), ep2->getCoordinateFrame().r);
 }

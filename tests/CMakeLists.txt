@@ -21,5 +21,5 @@ foreach(item ${directories})
  endif(TARGET ${item})
 endforeach(item ${directories})
 
-
+ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK)
  
